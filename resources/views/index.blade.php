@@ -9,9 +9,8 @@
     <title>Farmer CRM</title>
 </head>
 <body>
-    <div id="app">
-        <router-view></router-view>
-    </div>
+    <div id="app"></div>
+<script src="https://kit.fontawesome.com/66dfc7db4d.js" crossorigin="anonymous"></script>
 <script src="{{ asset('js/app.js') }}"></script>
 {{--<script src="{{mix('js/app.js')}}"></script>--}}
 </body>

@@ -1,15 +1,20 @@
 <template>
-    <div class="admin-menu">
-        <ul>
-            <li>
-                <i class="fa-solid fa-paw icon-custom"></i>
-                Удобрения
-            </li>
-            <li>
-                <i class="fa-solid fa-person icon-custom"></i>
-                Клиенты
-            </li>
-        </ul>
+    <div class="d-flex">
+        <div class="admin-menu">
+            <ul class="nav-menu">
+                <li>
+                    <i class="fa-solid fa-person icon-custom"></i>
+                    <router-link :to="'/client'">Клиенты</router-link>
+                </li>
+                <li>
+                    <i class="fa-solid fa-paw icon-custom"></i>
+                    <router-link :to="'/fertilizer'">Удобрения</router-link>
+                </li>
+            </ul>
+        </div>
+        <div class="container-fluid d-flex p-5 align-items-center flex-column">
+            <router-view></router-view>
+        </div>
     </div>
 </template>
 
@@ -20,8 +25,16 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.active {
+    font-weight: 800;
+}
+.nav-menu a {
+    text-decoration: none;
+    color: #000000;
+    font-size: 20px;
+}
 .admin-menu {
-    width: 220px;
+    width: 230px;
     height: 94vh;
     background: var(--app-color-green-light);
 }
