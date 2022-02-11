@@ -28775,7 +28775,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.btn[data-v-ddfcfae0] {\n    padding: 0.4rem 2rem;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.btn[data-v-ddfcfae0] {\r\n    padding: 0.4rem 2rem;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -28799,7 +28799,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.page-auth[data-v-03a7b821] {\n    height: 50vh !important;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.page-auth[data-v-03a7b821] {\r\n    height: 50vh !important;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -28823,7 +28823,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.page-error[data-v-0941d78e] {\n    height: 50vh;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.page-error[data-v-0941d78e] {\r\n    height: 50vh;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
