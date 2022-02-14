@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Culture;
+namespace App\Http\Controllers\Client;
 
-use App\Http\Requests\Culture\StoreRequest;
-use App\Http\Resources\Culture\CultureResource;
+use App\Http\Requests\Client\StoreRequest;
+use App\Http\Resources\Client\ClientResource;
 
 class StoreController extends BaseController
 {
@@ -13,6 +13,6 @@ class StoreController extends BaseController
 
         $data = $this->service->store($validated);
 
-        return new CultureResource($data);
+        return new ClientResource($data);
     }
 }

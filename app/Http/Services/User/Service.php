@@ -2,31 +2,21 @@
 
 namespace App\Http\Services\User;
 
+use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 
 class Service
 {
-    public function validate($request)
+
+    public function store($validator)
     {
-        return Validator::make($request->all(),[
-            'name' => 'unique:users|required|max:255|string',
-            'role_id' => 'number'
-        ], [
-            'name.required' => 'Поле не может быть пустым',
-            'name.unique' => 'Такой пользователь уже есть',
-            'name.string' => 'Поле должно быть строкой',
-            'name.max:255' => 'Поле не может быть длинее 255 символов',
-            'role_id.number' => 'Id роли не корректный'
-        ]);
+        return User::create($validator);
     }
 
-    public function store()
+    public function update($user, $validator)
     {
+        $user->update($validator);
 
-    }
-
-    public function update()
-    {
-
+        return $user;
     }
 }

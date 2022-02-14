@@ -17,7 +17,7 @@ class CreateClientsTable extends Migration
             $table->id();
             $table->string('client');
             $table->date('agreementDate');
-            $table->float('purchase',8,2);
+            $table->double('purchase',8,2);
             $table->string('region');
             $table->timestamps();
         });

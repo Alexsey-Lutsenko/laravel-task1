@@ -2,21 +2,18 @@
 
 namespace App\Http\Controllers\Culture;
 
+use App\Http\Requests\Culture\UpdateRequest;
 use App\Http\Resources\Culture\CultureResource;
 use App\Models\Culture;
-use Illuminate\Http\Request;
 
 class UpdateController extends BaseController
 {
-    public function __invoke(Request $request, Culture $culture)
+    public function __invoke(UpdateRequest $request, Culture $culture)
     {
-        $validator = $this->service->validate($request);
+        $validated = $request->validated();
 
-        if ($validator->fails()) {
-            return response(['message' => $validator->errors()->all()], 422);
-        }
+        $data = $this->service->update($culture, $validated);
 
-        $data = $this->service->update($culture, $request);
         return new CultureResource($data);
     }
 }

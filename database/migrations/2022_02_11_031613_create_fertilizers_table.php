@@ -15,13 +15,13 @@ class CreateFertilizersTable extends Migration
     {
         Schema::create('fertilizers', function (Blueprint $table) {
             $table->id();
-            $table->string('fertilizers');
-            $table->float('normN',8,2);
-            $table->float('normP',8,2);
-            $table->float('normK',8,2);
+            $table->string('fertilizer');
+            $table->double('normN',8,2);
+            $table->double('normP',8,2);
+            $table->double('normK',8,2);
             $table->unsignedBigInteger('culture_id');
             $table->string('region');
-            $table->float('price',8,2);
+            $table->double('price',8,2);
             $table->text('description')->nullable();
             $table->string('purpose');
             $table->timestamps();

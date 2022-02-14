@@ -13,8 +13,8 @@ class DestroyController extends BaseController
         $isDelete = $user->delete();
 
         if (!$isDelete) {
-            return response(['message' => "Пользователя $name удалить не удалось"]);
+            return response(['message' => "Пользователя $name удалить не удалось"], 500);
         }
-        return response(['message' => "Пользователь $name успешно удален"]);
+        return response(['message' => "Пользователь $name успешно удален"], 200);
     }
 }

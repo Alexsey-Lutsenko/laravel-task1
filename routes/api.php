@@ -27,7 +27,21 @@ Route::group(['namespace'=>'Culture', 'prefix'=>'cultures'], function() {
 
 Route::group(['namespace'=>'User', 'prefix'=>'users'], function() {
     Route::get('/','IndexController');
-//    Route::post('/', 'StoreController');
-//    Route::patch('/{user}', 'UpdateController');
+    Route::post('/', 'StoreController');
+    Route::patch('/{user}', 'UpdateController');
     Route::delete('/{user}', 'DestroyController');
+});
+
+Route::group(['namespace'=>'Client', 'prefix'=>'clients'], function() {
+    Route::get('/','IndexController');
+    Route::post('/', 'StoreController');
+    Route::patch('/{client}', 'UpdateController');
+    Route::delete('/{client}', 'DestroyController');
+});
+
+Route::group(['namespace'=>'Fertilizer', 'prefix'=>'fertilizers'], function() {
+    Route::get('/','IndexController');
+    Route::post('/', 'StoreController');
+    Route::patch('/{fertilizer}', 'UpdateController');
+    Route::delete('/{fertilizer}', 'DestroyController');
 });
