@@ -1,10 +1,18 @@
 <template>
-    <input :value="modelValue" @input="updateInput" type="text" />
+    <select
+        :value="modelValue"
+        @input="updateInput"
+        class="form-select"
+        aria-label="Default select example"
+    >
+        <option disabled value="">Выберите один из вариантов</option>
+        <slot></slot>
+    </select>
 </template>
 
 <script>
 export default {
-    name: "AppInput",
+    name: "AppSelect",
     props: {
         modelValue: [String, Number],
     },
@@ -16,17 +24,17 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
-input {
+<style scoped>
+select {
     width: 100%;
     padding: 0.375rem 0.75rem;
     background-clip: padding-box;
     border: 1px solid var(--app-color-green);
     border-radius: 0.25rem;
 }
-
-input:focus {
+select:focus {
     outline: 0;
+    border: 1px solid var(--app-color-green);
     box-shadow: 0 0 0 0.2rem rgba(163, 196, 153, 0.3);
 }
 </style>

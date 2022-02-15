@@ -12,10 +12,9 @@
 </template>
 
 <script>
-
 export default {
-    name: "MainLayout"
-}
+    name: "MainLayout",
+};
 </script>
 
 <style scoped lang="scss">
@@ -29,6 +28,8 @@ export default {
 }
 .navbar {
     background: #9bcbb5;
+    position: fixed;
+    width: 100%;
 }
 .fa-seedling {
     font-size: 25px;

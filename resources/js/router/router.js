@@ -5,6 +5,7 @@ import store from "../store";
 import NotFound from "../views/pages/NotFound";
 import FertilizerPage from "../views/pages/FertilizerPage";
 import ClientPage from "../views/pages/ClientPage";
+import UserPage from "../views/pages/UserPage";
 
 const routes = [
     {
@@ -29,6 +30,11 @@ const routes = [
                 path: '/fertilizer',
                 name: FertilizerPage,
                 component: FertilizerPage,
+            },
+            {
+                path: '/user',
+                name: UserPage,
+                component: UserPage,
             },
         ]
     },

@@ -1,7 +1,7 @@
 <template>
     <div class="d-flex">
         <div class="admin-menu">
-            <ul class="nav-menu">
+            <ul class="nav-menu top-nav-menu">
                 <li>
                     <i class="fa-solid fa-person icon-custom"></i>
                     <router-link :to="'/client'">Клиенты</router-link>
@@ -11,8 +11,16 @@
                     <router-link :to="'/fertilizer'">Удобрения</router-link>
                 </li>
             </ul>
+            <ul class="mt-auto nav-menu py-0">
+                <li>
+                    <i class="fa-solid fa-screwdriver-wrench icon-custom"></i>
+                    <router-link :to="'/user'">Пользователи</router-link>
+                </li>
+            </ul>
         </div>
-        <div class="container-fluid d-flex p-5 align-items-center flex-column">
+        <div
+            class="container-fluid d-flex p-5 align-items-center flex-column value-pd mt-5"
+        >
             <router-view></router-view>
         </div>
     </div>
@@ -20,13 +28,16 @@
 
 <script>
 export default {
-    name: "AdminPage"
-}
+    name: "AdminPage",
+};
 </script>
 
 <style scoped lang="scss">
 .active {
     font-weight: 800;
+}
+.top-nav-menu {
+    height: 80%;
 }
 .nav-menu a {
     text-decoration: none;
@@ -35,11 +46,20 @@ export default {
 }
 .admin-menu {
     width: 230px;
-    height: 94vh;
-    background: var(--app-color-green-light);
+    height: 100%;
+    position: fixed;
+    z-index: 1;
+    top: 55px;
+    left: 0;
+    background-color: var(--app-color-green-light);
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+.value-pd {
+    margin-left: 230px;
 }
 .admin-menu ul {
-    padding: 2rem 2rem;
+    padding: 2rem 1rem;
     list-style-type: none;
 }
 .admin-menu ul li {

@@ -45,3 +45,7 @@ Route::group(['namespace'=>'Fertilizer', 'prefix'=>'fertilizers'], function() {
     Route::patch('/{fertilizer}', 'UpdateController');
     Route::delete('/{fertilizer}', 'DestroyController');
 });
+
+Route::group(['namespace'=>'Role', 'prefix'=>'roles'], function() {
+    Route::get('/','IndexController');
+});
