@@ -24,7 +24,7 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'client' => 'unique:clients|required|max:255|string',
+            'client' => 'required|max:255|string',
             'agreementDate' => 'required|date',
             'purchase' => 'required|numeric',
             'region' => 'required|string|max:255'

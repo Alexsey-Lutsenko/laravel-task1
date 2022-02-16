@@ -23,7 +23,9 @@
         "vue-loader": "^17.0.0"
     },
     "dependencies": {
+        "dateformat": "^5.0.2",
         "vue-router": "^4.0.12",
+        "vue3-datepicker": "^0.3.2",
         "vuex": "^4.0.2"
     }
 }

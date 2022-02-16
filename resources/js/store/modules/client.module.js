@@ -1,32 +1,31 @@
 import axios from "axios";
 import errorHandler from "../../utils/services/errorHandler";
-import store from "../index";
 
 export default {
     namespaced: true,
     state() {
         return {
-            users: [],
+            clients: [],
             errors: [],
             errorCount: 0,
         };
     },
     mutations: {
-        addUsers(state, requests) {
-            state.users = requests;
+        addClients(state, request) {
+            state.clients = request;
         },
 
-        updateUser(state, payload) {
-            const i = state.users.indexOf(state.users.find((item) => item.id === payload.id));
+        destroyClient(state, payload) {
+            const i = state.clients.indexOf(state.clients.find((item) => item.id === payload));
             if (i >= 0) {
-                state.users[i] = payload;
+                state.clients.splice(i, 1);
             }
         },
 
-        destroyUsers(state, payload) {
-            const i = state.users.indexOf(state.users.find((item) => item.id === payload));
+        updateClients(state, payload) {
+            const i = state.clients.indexOf(state.clients.find((item) => item.id === payload.id));
             if (i >= 0) {
-                state.users.splice(i, 1);
+                state.clients[i] = payload;
             }
         },
 
@@ -46,8 +45,8 @@ export default {
     actions: {
         async index({ commit }) {
             try {
-                const { data } = await axios.get("api/users");
-                commit("addUsers", data.data);
+                const { data } = await axios.get("api/clients");
+                commit("addClients", data.data);
                 commit("remuveError");
             } catch (e) {
                 commit("addErrors", errorHandler(e));
@@ -56,20 +55,8 @@ export default {
 
         async store({ commit, dispatch }, payload) {
             try {
-                await axios.post("api/users", payload);
+                await axios.post("api/clients", payload);
                 dispatch("index");
-                commit("remuveError");
-            } catch (e) {
-                commit("addErrors", errorHandler(e));
-            }
-        },
-
-        async update({ commit }, payload) {
-            try {
-                await axios.patch(`api/users/${payload.id}`, payload);
-                const role = store.getters["role/getRoles"].find((item) => item.id == payload.role_id);
-                payload.role = role.role;
-                commit("updateUser", payload);
                 commit("remuveError");
             } catch (e) {
                 commit("addErrors", errorHandler(e));
@@ -78,8 +65,18 @@ export default {
 
         async destroy({ commit }, payload) {
             try {
-                await axios.delete(`api/users/${payload}`);
-                commit("destroyUsers", payload);
+                await axios.delete(`api/clients/${payload}`);
+                commit("destroyClient", payload);
+                commit("remuveError");
+            } catch (e) {
+                commit("addErrors", errorHandler(e));
+            }
+        },
+
+        async update({ commit }, payload) {
+            try {
+                await axios.patch(`api/clients/${payload.id}`, payload);
+                commit("updateClients", payload);
                 commit("remuveError");
             } catch (e) {
                 commit("addErrors", errorHandler(e));
@@ -87,8 +84,8 @@ export default {
         },
     },
     getters: {
-        getUsers(state) {
-            return state.users;
+        getClients(state) {
+            return state.clients;
         },
         getErrors(state) {
             return state.errors;

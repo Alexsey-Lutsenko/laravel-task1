@@ -1,13 +1,13 @@
 <template>
     <h1>Управление пользователями</h1>
     <div class="d-flex w-50 mt-3 mb-2 justify-content-start" v-if="!loader">
-        <app-button-create @create="create">
-            Новый пользователь
-        </app-button-create>
+        <app-button-create @create="create"> Новый пользователь </app-button-create>
     </div>
+
     <div class="d-flex w-100 justify-content-center">
         <app-loader v-if="loader"></app-loader>
     </div>
+
     <app-table class="w-50" v-if="!loader">
         <template v-slot:thead>
             <tr>
@@ -20,27 +20,17 @@
                 <td>{{ user.name }}</td>
                 <td>{{ user.role }}</td>
                 <td>
-                    <i
-                        class="fa-solid fa-pencil text-primary fs-5"
-                        @click="update(user)"
-                    ></i>
+                    <i class="fa-solid fa-pencil text-primary fs-5" @click="update(user)"></i>
                 </td>
                 <td>
-                    <i
-                        class="fa-regular fa-trash-can text-danger fs-5 pointer-event"
-                        @click="remuve(user.id)"
-                    ></i>
+                    <i class="fa-regular fa-trash-can text-danger fs-5 pointer-event" @click="remuve(user.id)"></i>
                 </td>
             </tr>
         </template>
     </app-table>
 
     <Teleport to="body">
-        <app-modal
-            :show="showModal || errorCount > 0"
-            @close="close"
-            @submit="save"
-        >
+        <app-modal :show="showModal || errorCount > 0" @close="close" @submit="save">
             <template #header>
                 <h3>Создать нового пользователя</h3>
             </template>
@@ -48,21 +38,14 @@
                 <form>
                     <div>
                         <label for="userName">Имя пользователя</label>
-                        <app-input
-                            id="userName"
-                            v-model="newUser.name"
-                        ></app-input>
+                        <app-input id="userName" v-model.trim="userModel.name"></app-input>
                         <small class="text-danger">{{ errors.name }}</small>
                     </div>
 
                     <div class="my-2">
                         <label for="role">Право доступа</label>
-                        <app-select v-model="newUser.role_id">
-                            <option
-                                v-for="role of roles"
-                                :key="role.id"
-                                :value="role.id"
-                            >
+                        <app-select v-model="userModel.role_id">
+                            <option v-for="role of roles" :key="role.id" :value="role.id">
                                 {{ role.role }}
                             </option>
                         </app-select>
@@ -85,13 +68,9 @@ export default {
     setup() {
         const store = useStore();
         const loader = ref(true);
-        const newUser = ref({
-            id: null,
-            name: "",
-            role_id: null,
-        });
+        const userModel = ref({});
         const showModal = ref(false);
-        const typeF = ref(0);
+        const typeSave = ref(0);
         const users = computed(() => store.getters["user/getUsers"]);
         const errors = computed(() => store.getters["user/getErrors"]);
         const errorCount = computed(() => store.getters["user/getErrorCount"]);
@@ -105,14 +84,14 @@ export default {
         });
 
         const save = async () => {
-            if (typeF.value === 1) {
-                await store.dispatch("user/store", newUser.value);
+            if (typeSave.value === 1) {
+                await store.dispatch("user/store", userModel.value);
                 showModal.value = false;
-                errorCount.value == 0 ? (newUser.value = {}) : newUser.value;
-            } else if (typeF.value === 2) {
-                await store.dispatch("user/update", newUser.value);
+                errorCount.value == 0 ? (userModel.value = {}) : userModel.value;
+            } else if (typeSave.value === 2) {
+                await store.dispatch("user/update", userModel.value);
                 showModal.value = false;
-                errorCount.value == 0 ? (newUser.value = {}) : newUser.value;
+                errorCount.value == 0 ? (userModel.value = {}) : userModel.value;
             }
         };
 
@@ -120,31 +99,26 @@ export default {
             users,
             loader,
             roles,
-            newUser,
+            userModel,
             errors,
             errorCount,
             showModal,
-            typeF,
+            typeSave,
             save,
             create: () => {
                 showModal.value = true;
-                typeF.value = 1;
+                typeSave.value = 1;
             },
             update: (user) => {
                 showModal.value = true;
-                newUser.value.id = user.id;
-                newUser.value.name = user.name;
-                newUser.value.role_id = user.role_id;
-                console.log(newUser.value);
-                typeF.value = 2;
+                userModel.value = Object.assign({}, user);
+                typeSave.value = 2;
             },
-            remuve: async (id) => {
-                await store.dispatch("user/remuve", id);
-            },
+            remuve: async (id) => await store.dispatch("user/destroy", id),
             close: () => {
                 showModal.value = false;
                 store.commit("user/remuveError");
-                newUser.value = {};
+                userModel.value = {};
             },
         };
     },

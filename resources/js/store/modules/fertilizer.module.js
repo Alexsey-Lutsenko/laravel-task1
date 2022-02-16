@@ -6,27 +6,27 @@ export default {
     namespaced: true,
     state() {
         return {
-            users: [],
+            fertilizers: [],
             errors: [],
             errorCount: 0,
         };
     },
     mutations: {
-        addUsers(state, requests) {
-            state.users = requests;
+        addFertilizers(state, request) {
+            state.fertilizers = request;
         },
 
-        updateUser(state, payload) {
-            const i = state.users.indexOf(state.users.find((item) => item.id === payload.id));
+        destroyFertilizer(state, payload) {
+            const i = state.fertilizers.indexOf(state.fertilizers.find((item) => item.id === payload));
             if (i >= 0) {
-                state.users[i] = payload;
+                state.fertilizers.splice(i, 1);
             }
         },
 
-        destroyUsers(state, payload) {
-            const i = state.users.indexOf(state.users.find((item) => item.id === payload));
+        updateFertilizers(state, payload) {
+            const i = state.fertilizers.indexOf(state.fertilizers.find((item) => item.id === payload.id));
             if (i >= 0) {
-                state.users.splice(i, 1);
+                state.fertilizers[i] = payload;
             }
         },
 
@@ -46,8 +46,8 @@ export default {
     actions: {
         async index({ commit }) {
             try {
-                const { data } = await axios.get("api/users");
-                commit("addUsers", data.data);
+                const { data } = await axios.get("api/fertilizers");
+                commit("addFertilizers", data.data);
                 commit("remuveError");
             } catch (e) {
                 commit("addErrors", errorHandler(e));
@@ -56,20 +56,8 @@ export default {
 
         async store({ commit, dispatch }, payload) {
             try {
-                await axios.post("api/users", payload);
+                await axios.post("api/fertilizers", payload);
                 dispatch("index");
-                commit("remuveError");
-            } catch (e) {
-                commit("addErrors", errorHandler(e));
-            }
-        },
-
-        async update({ commit }, payload) {
-            try {
-                await axios.patch(`api/users/${payload.id}`, payload);
-                const role = store.getters["role/getRoles"].find((item) => item.id == payload.role_id);
-                payload.role = role.role;
-                commit("updateUser", payload);
                 commit("remuveError");
             } catch (e) {
                 commit("addErrors", errorHandler(e));
@@ -78,8 +66,19 @@ export default {
 
         async destroy({ commit }, payload) {
             try {
-                await axios.delete(`api/users/${payload}`);
-                commit("destroyUsers", payload);
+                await axios.delete(`api/fertilizers/${payload}`);
+                commit("destroyFertilizer", payload);
+            } catch (e) {
+                commit("addErrors", errorHandler(e));
+            }
+        },
+
+        async update({ commit }, payload) {
+            try {
+                await axios.patch(`api/fertilizers/${payload.id}`, payload);
+                const culture = store.getters["culture/getCultures"].find((item) => item.id == payload.culture_id);
+                payload.culture = culture.culture;
+                commit("updateFertilizers", payload);
                 commit("remuveError");
             } catch (e) {
                 commit("addErrors", errorHandler(e));
@@ -87,8 +86,8 @@ export default {
         },
     },
     getters: {
-        getUsers(state) {
-            return state.users;
+        getFertilizers(state) {
+            return state.fertilizers;
         },
         getErrors(state) {
             return state.errors;

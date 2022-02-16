@@ -24,7 +24,7 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'fertilizer' => "unique:fertilizers|required|string|max:255",
+            'fertilizer' => "required|string|max:255",
             'normN' => "required|numeric",
             'normP' => "required|numeric",
             'normK' => "required|numeric",

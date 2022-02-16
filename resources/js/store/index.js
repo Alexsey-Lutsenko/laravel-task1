@@ -1,12 +1,18 @@
 import Vuex from "vuex";
-import auth from "./modules/auth.module"
-import user from "./modules/user.module"
-import role from "./modules/role.modules";
+import auth from "./modules/auth.module";
+import user from "./modules/user.module";
+import role from "./modules/role.module";
+import culture from "./modules/culture.module";
+import client from "./modules/client.module";
+import fertilizer from "./modules/fertilizer.module";
 
 export default new Vuex.Store({
     modules: {
         auth,
         user,
-        role
-    }
-})
+        role,
+        culture,
+        client,
+        fertilizer,
+    },
+});

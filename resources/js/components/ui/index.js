@@ -6,6 +6,7 @@ import AppButtonClose from "./AppButtonClose";
 import AppButtonCreate from "./AppButtonCreate";
 import AppTable from "./AppTable";
 import AppSelect from "./AppSelect";
+import AppCalendar from "./AppCalendar";
 
 export default [
     AppInput,
@@ -16,4 +17,5 @@ export default [
     AppModal,
     AppTable,
     AppSelect,
+    AppCalendar,
 ];

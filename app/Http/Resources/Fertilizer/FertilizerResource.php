@@ -21,6 +21,7 @@ class FertilizerResource extends JsonResource
             'normP' => $this->normP,
             'normK' => $this->normK,
             'culture_id' => $this->culture_id,
+            'culture' => $this->culture->culture,
             'region' => $this->region,
             'price' => $this->price,
             'description' => $this->description,

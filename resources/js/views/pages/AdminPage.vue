@@ -7,6 +7,10 @@
                     <router-link :to="'/client'">Клиенты</router-link>
                 </li>
                 <li>
+                    <i class="fa-solid fa-leaf icon-custom"></i>
+                    <router-link :to="'/culture'">Культуры</router-link>
+                </li>
+                <li>
                     <i class="fa-solid fa-paw icon-custom"></i>
                     <router-link :to="'/fertilizer'">Удобрения</router-link>
                 </li>
