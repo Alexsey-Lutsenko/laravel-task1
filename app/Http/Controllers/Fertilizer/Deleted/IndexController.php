@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Fertilizer\Deleted;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Fertilizer\FertilizerResource;
+use App\Http\Resources\Fertilizer\FertilizerResourceDeleted;
 use App\Models\Fertilizer;
 
 class IndexController extends Controller
@@ -11,6 +11,6 @@ class IndexController extends Controller
     public function __invoke()
     {
         $data = Fertilizer::onlyTrashed()->get();
-        return FertilizerResource::collection($data);
+        return FertilizerResourceDeleted::collection($data);
     }
 }

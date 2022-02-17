@@ -12,7 +12,6 @@
                 <th>Норма N</th>
                 <th>Норма P</th>
                 <th>Норма K</th>
-                <th>Культура</th>
                 <th>Регион</th>
                 <th>Цена</th>
                 <th>Описание</th>
@@ -25,7 +24,6 @@
                 <td>{{ fertilizer.normN }}</td>
                 <td>{{ fertilizer.normP }}</td>
                 <td>{{ fertilizer.normK }}</td>
-                <td>{{ fertilizer.culture }}</td>
                 <td>{{ fertilizer.region }}</td>
                 <td>{{ formatMoney.format(fertilizer.price) }}</td>
                 <td>{{ fertilizer.description }}</td>
