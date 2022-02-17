@@ -6,6 +6,7 @@ export default {
     state() {
         return {
             clients: [],
+            clientsDeleted: [],
             errors: [],
             errorCount: 0,
         };
@@ -13,6 +14,10 @@ export default {
     mutations: {
         addClients(state, request) {
             state.clients = request;
+        },
+
+        addClientsDeleted(state, request) {
+            state.clientsDeleted = request;
         },
 
         destroyClient(state, payload) {
@@ -30,8 +35,10 @@ export default {
         },
 
         addErrors(state, requests) {
-            state.errorCount = 1;
-            state.errors = requests;
+            if (requests.errors) {
+                state.errorCount = 1;
+            }
+            state.errors = requests.errors;
             if (requests.message) {
                 console.error("ERROR: ", requests.message);
             }
@@ -47,6 +54,16 @@ export default {
             try {
                 const { data } = await axios.get("api/clients");
                 commit("addClients", data.data);
+                commit("remuveError");
+            } catch (e) {
+                commit("addErrors", errorHandler(e));
+            }
+        },
+
+        async indexDeleted({ commit }) {
+            try {
+                const { data } = await axios.get("api/clients/deleted");
+                commit("addClientsDeleted", data.data);
                 commit("remuveError");
             } catch (e) {
                 commit("addErrors", errorHandler(e));
@@ -86,6 +103,9 @@ export default {
     getters: {
         getClients(state) {
             return state.clients;
+        },
+        getClientsDeleted(state) {
+            return state.clientsDeleted;
         },
         getErrors(state) {
             return state.errors;

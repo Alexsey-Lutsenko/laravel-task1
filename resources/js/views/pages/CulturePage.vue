@@ -43,6 +43,8 @@
             </template>
         </app-modal>
     </Teleport>
+
+    <app-toast></app-toast>
 </template>
 
 <script>

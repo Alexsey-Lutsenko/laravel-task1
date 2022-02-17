@@ -63,8 +63,6 @@ import { useStore } from "vuex";
 
 export default {
     name: "UserPage",
-    components: {},
-
     setup() {
         const store = useStore();
         const loader = ref(true);

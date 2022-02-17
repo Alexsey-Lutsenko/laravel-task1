@@ -23,6 +23,10 @@ Route::group(['namespace'=>'Culture', 'prefix'=>'cultures'], function() {
     Route::post('/', 'StoreController');
     Route::patch('/{culture}', 'UpdateController');
     Route::delete('/{culture}', 'DestroyController');
+
+    Route::group(['namespace'=>'Deleted', 'prefix'=>'deleted'], function() {
+        Route::get('/','IndexController');
+    });
 });
 
 Route::group(['namespace'=>'User', 'prefix'=>'users'], function() {
@@ -30,6 +34,10 @@ Route::group(['namespace'=>'User', 'prefix'=>'users'], function() {
     Route::post('/', 'StoreController');
     Route::patch('/{user}', 'UpdateController');
     Route::delete('/{user}', 'DestroyController');
+    
+    Route::group(['namespace'=>'Deleted', 'prefix'=>'deleted'], function() {
+        Route::get('/','IndexController');
+    });
 });
 
 Route::group(['namespace'=>'Client', 'prefix'=>'clients'], function() {
@@ -37,6 +45,10 @@ Route::group(['namespace'=>'Client', 'prefix'=>'clients'], function() {
     Route::post('/', 'StoreController');
     Route::patch('/{client}', 'UpdateController');
     Route::delete('/{client}', 'DestroyController');
+
+    Route::group(['namespace'=>'Deleted', 'prefix'=>'deleted'], function() {
+        Route::get('/','IndexController');
+    });
 });
 
 Route::group(['namespace'=>'Fertilizer', 'prefix'=>'fertilizers'], function() {
@@ -44,6 +56,10 @@ Route::group(['namespace'=>'Fertilizer', 'prefix'=>'fertilizers'], function() {
     Route::post('/', 'StoreController');
     Route::patch('/{fertilizer}', 'UpdateController');
     Route::delete('/{fertilizer}', 'DestroyController');
+
+    Route::group(['namespace'=>'Deleted', 'prefix'=>'deleted'], function() {
+        Route::get('/','IndexController');
+    });
 });
 
 Route::group(['namespace'=>'Role', 'prefix'=>'roles'], function() {

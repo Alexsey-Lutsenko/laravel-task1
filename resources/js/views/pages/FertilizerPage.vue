@@ -133,7 +133,6 @@ export default {
             await store.dispatch("fertilizer/index");
             await store.dispatch("culture/index");
             loader.value = false;
-            console.log(fertilizers.value);
         });
 
         const save = async () => {
@@ -166,7 +165,7 @@ export default {
             close: () => {
                 showModal.value = false;
                 store.commit("fertilizer/remuveError");
-                cultureModel.value = {};
+                fertilizerModel.value = {};
             },
             remuve: async (id) => {
                 await store.dispatch("fertilizer/destroy", id);

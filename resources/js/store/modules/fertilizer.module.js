@@ -7,6 +7,7 @@ export default {
     state() {
         return {
             fertilizers: [],
+            fertilizersDeleted: [],
             errors: [],
             errorCount: 0,
         };
@@ -14,6 +15,10 @@ export default {
     mutations: {
         addFertilizers(state, request) {
             state.fertilizers = request;
+        },
+
+        addFertilizersDeleted(state, request) {
+            state.fertilizersDeleted = request;
         },
 
         destroyFertilizer(state, payload) {
@@ -31,8 +36,10 @@ export default {
         },
 
         addErrors(state, requests) {
-            state.errorCount = 1;
-            state.errors = requests;
+            if (requests.errors) {
+                state.errorCount = 1;
+            }
+            state.errors = requests.errors;
             if (requests.message) {
                 console.error("ERROR: ", requests.message);
             }
@@ -48,6 +55,16 @@ export default {
             try {
                 const { data } = await axios.get("api/fertilizers");
                 commit("addFertilizers", data.data);
+                commit("remuveError");
+            } catch (e) {
+                commit("addErrors", errorHandler(e));
+            }
+        },
+
+        async indexDeleted({ commit }) {
+            try {
+                const { data } = await axios.get("api/fertilizers/deleted");
+                commit("addFertilizersDeleted", data.data);
                 commit("remuveError");
             } catch (e) {
                 commit("addErrors", errorHandler(e));
@@ -88,6 +105,9 @@ export default {
     getters: {
         getFertilizers(state) {
             return state.fertilizers;
+        },
+        getFertilizersDeleted(state) {
+            return state.fertilizersDeleted;
         },
         getErrors(state) {
             return state.errors;

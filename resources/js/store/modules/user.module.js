@@ -9,11 +9,16 @@ export default {
             users: [],
             errors: [],
             errorCount: 0,
+            usersDeleted: [],
         };
     },
     mutations: {
         addUsers(state, requests) {
             state.users = requests;
+        },
+
+        addUsersDeleted(state, requests) {
+            state.usersDeleted = requests;
         },
 
         updateUser(state, payload) {
@@ -31,8 +36,10 @@ export default {
         },
 
         addErrors(state, requests) {
-            state.errorCount = 1;
-            state.errors = requests;
+            if (requests.errors) {
+                state.errorCount = 1;
+            }
+            state.errors = requests.errors;
             if (requests.message) {
                 console.error("ERROR: ", requests.message);
             }
@@ -48,6 +55,16 @@ export default {
             try {
                 const { data } = await axios.get("api/users");
                 commit("addUsers", data.data);
+                commit("remuveError");
+            } catch (e) {
+                commit("addErrors", errorHandler(e));
+            }
+        },
+
+        async indexDeleted({ commit }) {
+            try {
+                const { data } = await axios.get("api/users/deleted");
+                commit("addUsersDeleted", data.data);
                 commit("remuveError");
             } catch (e) {
                 commit("addErrors", errorHandler(e));
@@ -89,6 +106,9 @@ export default {
     getters: {
         getUsers(state) {
             return state.users;
+        },
+        getUsersDeleted(state) {
+            return state.usersDeleted;
         },
         getErrors(state) {
             return state.errors;

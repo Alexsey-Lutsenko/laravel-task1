@@ -20,11 +20,13 @@
                     <i class="fa-solid fa-screwdriver-wrench icon-custom"></i>
                     <router-link :to="'/user'">Пользователи</router-link>
                 </li>
+                <li>
+                    <i class="fa-solid fa-trash-can-arrow-up icon-custom-remuve"></i>
+                    <router-link :to="'/deleted'">Удаленное</router-link>
+                </li>
             </ul>
         </div>
-        <div
-            class="container-fluid d-flex p-5 align-items-center flex-column value-pd mt-5"
-        >
+        <div class="container-fluid d-flex p-5 align-items-center flex-column value-pd mt-5">
             <router-view></router-view>
         </div>
     </div>
@@ -41,7 +43,7 @@ export default {
     font-weight: 800;
 }
 .top-nav-menu {
-    height: 80%;
+    min-height: 60%;
 }
 .nav-menu a {
     text-decoration: none;
@@ -56,7 +58,6 @@ export default {
     top: 55px;
     left: 0;
     background-color: var(--app-color-green-light);
-    overflow-x: hidden;
     padding-top: 20px;
 }
 .value-pd {
@@ -73,6 +74,10 @@ export default {
 .icon-custom {
     margin-right: 5px;
     color: var(--app-color-green);
+}
+.icon-custom-remuve {
+    margin-right: 5px;
+    color: rgb(192, 93, 93);
 }
 .fa-person.icon-custom {
     font-size: 25px;

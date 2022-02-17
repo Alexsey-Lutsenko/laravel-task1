@@ -19,15 +19,18 @@ class CreateFertilizersTable extends Migration
             $table->double('normN',8,2);
             $table->double('normP',8,2);
             $table->double('normK',8,2);
-            $table->unsignedBigInteger('culture_id');
+            // $table->unsignedBigInteger('culture_id');
             $table->string('region');
             $table->double('price',8,2);
             $table->text('description')->nullable();
             $table->string('purpose');
             $table->timestamps();
+            $table->softDeletes();
 
-            $table->index('culture_id', 'fertilizer_culture_idx');
-            $table->foreign('culture_id', 'fertilizer_culture_fk')->on('cultures')->references('id');
+            // $table->index('culture_id', 'fertilizer_culture_idx');
+            // $table->foreign('culture_id', 'fertilizer_culture_fk')->on('cultures')->references('id');
+
+            $table->foreignId('culture_id')->index()->constrained('cultures');
         });
     }
 

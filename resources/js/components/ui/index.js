@@ -7,6 +7,7 @@ import AppButtonCreate from "./AppButtonCreate";
 import AppTable from "./AppTable";
 import AppSelect from "./AppSelect";
 import AppCalendar from "./AppCalendar";
+import AppToast from "./AppToast";
 
 export default [
     AppInput,
@@ -18,4 +19,5 @@ export default [
     AppTable,
     AppSelect,
     AppCalendar,
+    AppToast,
 ];

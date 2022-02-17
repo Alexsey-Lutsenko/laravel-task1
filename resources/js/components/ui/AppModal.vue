@@ -63,8 +63,6 @@ export default {
     border-radius: 2px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
     transition: all 0.3s ease;
-    overflow: auto;
-    max-height: 800px;
 }
 
 .modal-header h3 {
@@ -74,6 +72,8 @@ export default {
 
 .modal-body {
     margin: 20px 0;
+    overflow: auto;
+    max-height: 400px;
 }
 
 .modal-default-button {

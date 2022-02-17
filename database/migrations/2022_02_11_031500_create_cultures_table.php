@@ -17,6 +17,7 @@ class CreateCulturesTable extends Migration
             $table->id();
             $table->string('culture');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

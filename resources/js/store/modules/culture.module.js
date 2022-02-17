@@ -6,13 +6,20 @@ export default {
     state() {
         return {
             cultures: [],
+            culturesDeleted: [],
             errors: [],
+            errorMessage: "",
+            errorMessageTimeout: 2000,
             errorCount: 0,
         };
     },
     mutations: {
         addCultures(state, request) {
             state.cultures = request;
+        },
+
+        addCulturesDeleted(state, request) {
+            state.culturesDeleted = request;
         },
 
         destroyCulture(state, payload) {
@@ -30,11 +37,21 @@ export default {
         },
 
         addErrors(state, requests) {
-            state.errorCount = 1;
-            state.errors = requests;
+            if (requests.errors) {
+                state.errorCount = 1;
+            }
+            state.errors = requests.errors;
             if (requests.message) {
                 console.error("ERROR: ", requests.message);
             }
+        },
+
+        addErrorMessage(state, request) {
+            state.errorMessage = request.message;
+        },
+
+        remuveErrorMessage(state) {
+            state.errorMessage = "";
         },
 
         remuveError(state) {
@@ -53,6 +70,16 @@ export default {
             }
         },
 
+        async indexDeleted({ commit }) {
+            try {
+                const { data } = await axios.get("api/cultures/deleted");
+                commit("addCulturesDeleted", data.data);
+                commit("remuveError");
+            } catch (e) {
+                commit("addErrors", errorHandler(e));
+            }
+        },
+
         async store({ commit, dispatch }, payload) {
             try {
                 await axios.post("api/cultures", payload);
@@ -63,12 +90,16 @@ export default {
             }
         },
 
-        async destroy({ commit }, payload) {
+        async destroy({ state, commit }, payload) {
             try {
                 await axios.delete(`api/cultures/${payload}`);
                 commit("destroyCulture", payload);
             } catch (e) {
                 commit("addErrors", errorHandler(e));
+                commit("addErrorMessage", errorHandler(e));
+                setTimeout(() => {
+                    commit("remuveErrorMessage");
+                }, state.errorMessageTimeout);
             }
         },
 
@@ -86,12 +117,24 @@ export default {
             return state.cultures;
         },
 
+        getCulturesDeleted(state) {
+            return state.culturesDeleted;
+        },
+
         getErrors(state) {
             return state.errors;
         },
 
+        getErrorMessage(state) {
+            return state.errorMessage;
+        },
+
         getErrorCount(state) {
             return state.errorCount;
+        },
+
+        getErrorMessageTimeout(state) {
+            return state.errorMessageTimeout;
         },
     },
 };

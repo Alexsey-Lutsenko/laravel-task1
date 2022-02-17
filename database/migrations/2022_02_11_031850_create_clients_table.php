@@ -20,6 +20,7 @@ class CreateClientsTable extends Migration
             $table->double('purchase',8,2);
             $table->string('region');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
