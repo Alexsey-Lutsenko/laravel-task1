@@ -11,7 +11,7 @@ class IndexController extends Controller
     public function __invoke()
     {
         $data = Client::all();
-
+        
         return ClientResource::collection($data);
     }
 }

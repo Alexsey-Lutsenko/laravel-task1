@@ -5,6 +5,7 @@ import role from "./modules/role.module";
 import culture from "./modules/culture.module";
 import client from "./modules/client.module";
 import fertilizer from "./modules/fertilizer.module";
+import clientFilter from "./modules/clientFilter.module";
 
 export default new Vuex.Store({
     modules: {
@@ -14,5 +15,6 @@ export default new Vuex.Store({
         culture,
         client,
         fertilizer,
+        clientFilter,
     },
 });

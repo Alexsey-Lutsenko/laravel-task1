@@ -49,6 +49,10 @@ Route::group(['namespace'=>'Client', 'prefix'=>'clients'], function() {
     Route::group(['namespace'=>'Deleted', 'prefix'=>'deleted'], function() {
         Route::get('/','IndexController');
     });
+
+    Route::group(['namespace'=>'Filter', 'prefix'=>'filter'], function() {
+        Route::post('/','IndexController');
+    });
 });
 
 Route::group(['namespace'=>'Fertilizer', 'prefix'=>'fertilizers'], function() {

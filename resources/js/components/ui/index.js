@@ -8,6 +8,7 @@ import AppTable from "./AppTable";
 import AppSelect from "./AppSelect";
 import AppCalendar from "./AppCalendar";
 import AppToast from "./AppToast";
+import AppMultiSelect from "./AppMultiSelect";
 
 export default [
     AppInput,
@@ -20,4 +21,5 @@ export default [
     AppSelect,
     AppCalendar,
     AppToast,
+    AppMultiSelect,
 ];

@@ -1,7 +1,22 @@
 <template>
     <h1>Управление клиентами</h1>
-    <div class="d-flex w-50 mt-3 mb-2 justify-content-start" v-if="!loader">
-        <app-button-create @create="create"> Новый клиент </app-button-create>
+
+    <div class="d-flex w-50 mt-3 mb-2 justify-content-between" v-if="!loader">
+        <div>
+            <app-button-create @create="create"> Новый клиент </app-button-create>
+        </div>
+        <div class="d-flex">
+            <div class="mx-2">
+                <button class="btn btn-primary" @click="showModalFilter = true">
+                    <i class="fa-solid fa-filter"></i>
+                </button>
+            </div>
+            <div>
+                <button class="btn btn-danger" @click="deleteFilter">
+                    <i class="fa-solid fa-filter-circle-xmark"></i>
+                </button>
+            </div>
+        </div>
     </div>
 
     <div class="d-flex w-100 justify-content-center">
@@ -64,12 +79,15 @@
             </template>
         </app-modal>
     </Teleport>
+
+    <client-filter :showModal="showModalFilter" @close="closeFilter" @save="saveFilter"></client-filter>
 </template>
 
 <script>
 import { ref, onMounted, computed } from "vue";
 import { useStore } from "vuex";
 import dateFormat, { masks } from "dateformat";
+import ClientFilter from "../../components/filterComponent/ClientFilter.vue";
 
 export default {
     name: "ClientPage",
@@ -77,20 +95,27 @@ export default {
         const store = useStore();
         const loader = ref(true);
         const showModal = ref(false);
+        const showModalFilter = ref(false);
         const typeSave = ref(0);
         const clientModel = ref({
             agreementDate: new Date(),
         });
+        const countErrorFilter = ref(1);
 
         const formatMoney = new Intl.NumberFormat("ru-RU", { currency: "RUB", style: "currency" });
 
         const clients = computed(() => store.getters["client/getClients"]);
         const errorCount = computed(() => store.getters["client/getErrorCount"]);
         const errors = computed(() => store.getters["client/getErrors"]);
+        const isFilter = computed(() => store.getters["clientFilter/getIsFilter"]);
 
         onMounted(async () => {
             loader.value = true;
-            await store.dispatch("client/index");
+            if (isFilter.value) {
+                await store.dispatch("client/indexFilter");
+            } else {
+                await store.dispatch("client/index");
+            }
             loader.value = false;
         });
 
@@ -98,7 +123,7 @@ export default {
             if (typeSave.value === 1) {
                 await store.dispatch("client/store", clientModel.value);
                 showModal.value = false;
-                errorCount.value == 0 ? (clientModel.value = {}) : clientModel.value;
+                errorCount.value == 0 ? (clientModel.value = { agreementDate: new Date() }) : clientModel.value;
             } else if (typeSave.value === 2) {
                 await store.dispatch("client/update", clientModel.value);
                 showModal.value = false;
@@ -111,9 +136,11 @@ export default {
             loader,
             clients,
             showModal,
+            showModalFilter,
             clientModel,
             typeSave,
             errorCount,
+            countErrorFilter,
             errors,
             save,
             formatMoney,
@@ -127,6 +154,9 @@ export default {
                 store.commit("client/remuveError");
                 clientModel.value = {};
             },
+            closeFilter: () => {
+                showModalFilter.value = false;
+            },
             update: (client) => {
                 client.agreementDate = new Date(client.agreementDate);
                 showModal.value = true;
@@ -134,8 +164,15 @@ export default {
                 typeSave.value = 2;
             },
             remuve: async (id) => await store.dispatch("client/destroy", id),
+            saveFilter: () => {
+                showModalFilter.value = false;
+            },
+            deleteFilter: async () => {
+                store.commit("clientFilter/remuveFilter");
+            },
         };
     },
+    components: { ClientFilter },
 };
 </script>
 

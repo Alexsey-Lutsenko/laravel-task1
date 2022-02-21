@@ -1,5 +1,6 @@
 import axios from "axios";
 import errorHandler from "../../utils/services/errorHandler";
+import store from "../index";
 
 export default {
     namespaced: true,
@@ -7,6 +8,7 @@ export default {
         return {
             clients: [],
             clientsDeleted: [],
+            regions: [],
             errors: [],
             errorCount: 0,
         };
@@ -14,6 +16,13 @@ export default {
     mutations: {
         addClients(state, request) {
             state.clients = request;
+
+            state.regions = [];
+            request.forEach((el) => {
+                if (!state.regions.includes(el.region)) {
+                    state.regions.push(el.region);
+                }
+            });
         },
 
         addClientsDeleted(state, request) {
@@ -53,6 +62,16 @@ export default {
         async index({ commit }) {
             try {
                 const { data } = await axios.get("api/clients");
+                commit("addClients", data.data);
+                commit("remuveError");
+            } catch (e) {
+                commit("addErrors", errorHandler(e));
+            }
+        },
+
+        async indexFilter({ commit, getters }) {
+            try {
+                const { data } = await axios.post("api/clients/filter", store.getters["clientFilter/getFilter"]);
                 commit("addClients", data.data);
                 commit("remuveError");
             } catch (e) {
@@ -103,6 +122,9 @@ export default {
     getters: {
         getClients(state) {
             return state.clients;
+        },
+        getRegions(state) {
+            return state.regions;
         },
         getClientsDeleted(state) {
             return state.clientsDeleted;

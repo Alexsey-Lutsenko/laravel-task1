@@ -20,7 +20,7 @@ export default {
 </script>
 
 <style>
-#agreementDate {
+.v3dp__input_wrapper input {
     width: 100%;
     padding: 0.375rem 0.75rem;
     background-clip: padding-box;
@@ -28,7 +28,7 @@ export default {
     border-radius: 0.25rem;
 }
 
-#agreementDate:focus {
+.v3dp__input_wrapper input:focus {
     outline: 0;
     box-shadow: 0 0 0 0.2rem rgba(163, 196, 153, 0.3);
 }
