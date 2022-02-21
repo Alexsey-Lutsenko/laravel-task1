@@ -1,7 +1,22 @@
 <template>
     <h1>Управление удобрениями</h1>
-    <div class="d-flex w-75 mt-3 mb-2 justify-content-start" v-if="!loader">
-        <app-button-create @create="create"> Новое удобрение </app-button-create>
+
+    <div class="d-flex w-75 mt-3 mb-2 justify-content-between" v-if="!loader">
+        <div>
+            <app-button-create @create="create"> Новое удобрение </app-button-create>
+        </div>
+        <div class="d-flex">
+            <div class="mx-2">
+                <button class="btn btn-primary" @click="showModalFilter = true">
+                    <i class="fa-solid fa-filter"></i>
+                </button>
+            </div>
+            <div>
+                <button class="btn btn-danger" @click="deleteFilter">
+                    <i class="fa-solid fa-filter-circle-xmark"></i>
+                </button>
+            </div>
+        </div>
     </div>
 
     <div class="d-flex w-100 justify-content-center">
@@ -37,10 +52,7 @@
                     <i class="fa-solid fa-pencil text-primary fs-5" @click="update(fertilizer)"></i>
                 </td>
                 <td>
-                    <i
-                        class="fa-regular fa-trash-can text-danger fs-5 pointer-event"
-                        @click="remuve(fertilizer.id)"
-                    ></i>
+                    <i class="fa-regular fa-trash-can text-danger fs-5 pointer-event" @click="remuve(fertilizer.id)"></i>
                 </td>
             </tr>
         </template>
@@ -106,11 +118,14 @@
             </template>
         </app-modal>
     </Teleport>
+
+    <fertilizer-filter :showModal="showModalFilter" @close="closeFilter" @save="saveFilter"></fertilizer-filter>
 </template>
 
 <script>
 import { ref, onMounted, computed } from "vue";
 import { useStore } from "vuex";
+import FertilizerFilter from "../../components/filterComponent/FertilizerFilter.vue";
 
 export default {
     name: "FertilizerPage",
@@ -120,6 +135,7 @@ export default {
         const showModal = ref(false);
         const typeSave = ref(0);
         const fertilizerModel = ref({});
+        const showModalFilter = ref(false);
 
         const fertilizers = computed(() => store.getters["fertilizer/getFertilizers"]);
         const cultures = computed(() => store.getters["culture/getCultures"]);
@@ -158,6 +174,7 @@ export default {
             errorCount,
             errors,
             formatMoney,
+            showModalFilter,
             create: () => {
                 showModal.value = true;
                 typeSave.value = 1;
@@ -175,8 +192,18 @@ export default {
                 fertilizerModel.value = Object.assign({}, fertilizer);
                 typeSave.value = 2;
             },
+            saveFilter: () => {
+                showModalFilter.value = false;
+            },
+            deleteFilter: async () => {
+                store.commit("fertilizerFilter/remuveFilter");
+            },
+            closeFilter: () => {
+                showModalFilter.value = false;
+            },
         };
     },
+    components: { FertilizerFilter },
 };
 </script>
 

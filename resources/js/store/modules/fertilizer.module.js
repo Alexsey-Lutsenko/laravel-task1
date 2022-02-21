@@ -10,11 +10,32 @@ export default {
             fertilizersDeleted: [],
             errors: [],
             errorCount: 0,
+            regions: [],
+            cultures: [],
         };
     },
     mutations: {
         addFertilizers(state, request) {
             state.fertilizers = request;
+
+            state.regions = [];
+            request.forEach((el) => {
+                if (!state.regions.includes(el.region)) {
+                    state.regions.push(el.region);
+                }
+            });
+            state.cultures = [];
+
+            request.forEach((el) => {
+                const i = state.cultures.indexOf(state.cultures.find((item) => item.id === el.culture_id));
+
+                if (i < 0) {
+                    state.cultures.push({
+                        id: el.culture_id,
+                        culture: el.culture,
+                    });
+                }
+            });
         },
 
         addFertilizersDeleted(state, request) {
@@ -51,9 +72,9 @@ export default {
         },
     },
     actions: {
-        async index({ commit }) {
+        async index({ commit }, payload) {
             try {
-                const { data } = await axios.get("api/fertilizers");
+                const { data } = await axios.get("api/fertilizers", { params: payload });
                 commit("addFertilizers", data.data);
                 commit("remuveError");
             } catch (e) {
@@ -105,6 +126,12 @@ export default {
     getters: {
         getFertilizers(state) {
             return state.fertilizers;
+        },
+        getRegions(state) {
+            return state.regions;
+        },
+        getCultures(state) {
+            return state.cultures;
         },
         getFertilizersDeleted(state) {
             return state.fertilizersDeleted;

@@ -8,11 +8,6 @@
 export default {
     name: "AppMultiSelect",
     props: ["model"],
-    // methods: {
-    //     updateInput(event) {
-    //         this.$emit("update:modelValue", event.target.value, console.log(event.target.value));
-    //     },
-    // },
 };
 </script>
 

@@ -20,7 +20,7 @@ export default {
             if (state.isFilter) {
                 state.filter = {};
                 state.isFilter = false;
-                store.dispatch("client/index");
+                store.dispatch("fertilizer/index");
             }
         },
 
@@ -43,12 +43,6 @@ export default {
     getters: {
         getFilter(state) {
             if (state.isFilter) {
-                if (state.filter.agreementDateFrom) {
-                    state.filter.agreementDateFrom = new Date(state.filter.agreementDateFrom);
-                }
-                if (state.filter.agreementDateTo) {
-                    state.filter.agreementDateTo = new Date(state.filter.agreementDateTo);
-                }
                 return state.filter;
             }
             return state.filter;

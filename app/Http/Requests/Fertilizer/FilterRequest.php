@@ -3,9 +3,8 @@
 namespace App\Http\Requests\Fertilizer;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class StoreRequest extends FormRequest
+class FilterRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,15 +24,17 @@ class StoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'fertilizer' => 'unique:fertilizers|required|string|max:255',
-            'normN' => "required|numeric",
-            'normP' => "required|numeric",
-            'normK' => "required|numeric",
-            'culture_id' => "exists:cultures,id",
-            'region' => "required|string|max:255",
-            'price' => "required|numeric",
+            'fertilizer' => "string|max:255",
+            'normN' => "",
+            'normP' => "",
+            'normK' => "",
+            'culture_id' => "",
+            'region' => "",
+            'price' => "",
             'description' => "",
-            'purpose' => "required|string|max:255",
+            'purpose' => "string|max:255",
+            'orderByFertilizer' => "",
+            'orderByPrice' => "",
         ];
     }
 }

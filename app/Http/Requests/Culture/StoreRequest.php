@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Culture;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreRequest extends FormRequest
 {
@@ -24,7 +25,12 @@ class StoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'culture' => 'unique:cultures|required|string|max:255'
+            'culture' => [
+                    'required',
+                    'string',
+                    'max:255',
+                    Rule::unique('cultures')->whereNull('deleted_at'),
+            ],
         ];
     }
 }
