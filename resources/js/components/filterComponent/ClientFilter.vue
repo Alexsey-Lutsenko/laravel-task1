@@ -46,7 +46,7 @@
                     </div>
                     <div class="my-2">
                         <label for="region">Регион</label>
-                        <app-multi-select v-model="filter.regions">
+                        <app-multi-select v-model="filter.region">
                             <option v-for="region of regions" :key="region">
                                 {{ region }}
                             </option>
@@ -62,6 +62,7 @@
 <script>
 import { ref, computed } from "vue";
 import { useStore } from "vuex";
+import dateFormat, { masks } from "dateformat";
 
 export default {
     name: "ClientFilter",
@@ -75,14 +76,34 @@ export default {
         const store = useStore();
         const errorCount = ref(0);
         const errorsFilter = ref({});
-        const filter = ref({});
+        const purchase = ref([]);
+        const agreementDate = ref([]);
+        const params = ref({});
 
         const regions = computed(() => store.getters["client/getRegions"]);
-        // const filter = computed(() => store.getters["clientFilter/getFilter"]);
+        const filter = computed(() => store.getters["clientFilter/getFilter"]);
 
         const getFilter = async () => {
+            purchase.value = [];
+            agreementDate.value = [];
+            params.value = {};
+
+            purchase.value.push(filter.value.purchaseFrom ? filter.value.purchaseFrom : 0);
+            purchase.value.push(filter.value.purchaseTo ? filter.value.purchaseTo : 999999999);
+            agreementDate.value.push(filter.value.agreementDateFrom ? dateFormat(filter.value.agreementDateFrom, "dd.mm.yyyy") : "01.01.0001");
+            agreementDate.value.push(filter.value.agreementDateTo ? dateFormat(filter.value.agreementDateTo, "dd.mm.yyyy") : "31.12.9999");
+
+            filter.value.client ? (params.value["client"] = filter.value.client) : params.value;
+            filter.value.orderByClient ? (params.value["orderByClient"] = "orderByClient") : params.value;
+            filter.value.orderByPurchase ? (params.value["orderByPurchase"] = "orderByPurchase") : params.value;
+            filter.value.agreementDateFrom || filter.value.agreementDateTo ? (params.value["agreementDate"] = agreementDate.value) : params.value;
+            filter.value.purchaseFrom || filter.value.purchaseTo ? (params.value["purchase"] = purchase.value) : params.value;
+            filter.value.region ? (params.value["region"] = filter.value.region) : params.value;
+
+            console.log(params.value);
+
             store.commit("clientFilter/addFilter", filter.value);
-            await store.dispatch("client/indexFilter");
+            await store.dispatch("client/index", params.value);
         };
 
         return {

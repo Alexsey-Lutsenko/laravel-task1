@@ -15,8 +15,8 @@ export default {
     namespaced: true,
     state() {
         return {
-            filter: Object.assign({}, modelFilter),
-            isFilter: !!localStorage.getItem("clientFilter"),
+            filter: {},
+            isFilter: false,
             errors: [],
             errorCount: 0,
         };
@@ -25,13 +25,11 @@ export default {
         addFilter(state, filter) {
             state.isFilter = true;
             state.filter = filter;
-            localStorage.setItem("clientFilter", JSON.stringify(state.filter));
         },
 
         remuveFilter(state) {
             if (state.isFilter) {
-                localStorage.removeItem("clientFilter");
-                state.filter = Object.assign({}, modelFilter);
+                state.filter = {};
                 state.isFilter = false;
                 store.dispatch("client/index");
             }
@@ -56,7 +54,6 @@ export default {
     getters: {
         getFilter(state) {
             if (state.isFilter) {
-                state.filter = JSON.parse(localStorage.getItem("clientFilter"));
                 if (state.filter.agreementDateFrom) {
                     state.filter.agreementDateFrom = new Date(state.filter.agreementDateFrom);
                 }

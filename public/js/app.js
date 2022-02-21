@@ -22932,12 +22932,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
+/* harmony import */ var dateformat__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! dateformat */ "./node_modules/dateformat/lib/dateformat.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 
 
 
@@ -22951,13 +22953,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   setup: function setup(props, _ref) {
     var emit = _ref.emit;
-    var store = (0,vuex__WEBPACK_IMPORTED_MODULE_2__.useStore)();
+    var store = (0,vuex__WEBPACK_IMPORTED_MODULE_3__.useStore)();
     var errorCount = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(0);
     var errorsFilter = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)({});
-    var filter = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)({});
+    var purchase = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
+    var agreementDate = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
+    var params = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)({});
     var regions = (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
       return store.getters["client/getRegions"];
-    }); // const filter = computed(() => store.getters["clientFilter/getFilter"]);
+    });
+    var filter = (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
+      return store.getters["clientFilter/getFilter"];
+    });
 
     var getFilter = /*#__PURE__*/function () {
       var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
@@ -22965,11 +22972,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                purchase.value = [];
+                agreementDate.value = [];
+                params.value = {};
+                purchase.value.push(filter.value.purchaseFrom ? filter.value.purchaseFrom : 0);
+                purchase.value.push(filter.value.purchaseTo ? filter.value.purchaseTo : 999999999);
+                agreementDate.value.push(filter.value.agreementDateFrom ? (0,dateformat__WEBPACK_IMPORTED_MODULE_2__["default"])(filter.value.agreementDateFrom, "dd.mm.yyyy") : "01.01.0001");
+                agreementDate.value.push(filter.value.agreementDateTo ? (0,dateformat__WEBPACK_IMPORTED_MODULE_2__["default"])(filter.value.agreementDateTo, "dd.mm.yyyy") : "31.12.9999");
+                filter.value.client ? params.value["client"] = filter.value.client : params.value;
+                filter.value.orderByClient ? params.value["orderByClient"] = "orderByClient" : params.value;
+                filter.value.orderByPurchase ? params.value["orderByPurchase"] = "orderByPurchase" : params.value;
+                filter.value.agreementDateFrom || filter.value.agreementDateTo ? params.value["agreementDate"] = agreementDate.value : params.value;
+                filter.value.purchaseFrom || filter.value.purchaseTo ? params.value["purchase"] = purchase.value : params.value;
+                filter.value.region ? params.value["region"] = filter.value.region : params.value;
+                console.log(params.value);
                 store.commit("clientFilter/addFilter", filter.value);
-                _context.next = 3;
-                return store.dispatch("client/indexFilter");
+                _context.next = 17;
+                return store.dispatch("client/index", params.value);
 
-              case 3:
+              case 17:
               case "end":
                 return _context.stop();
             }
@@ -23443,27 +23464,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           switch (_context.prev = _context.next) {
             case 0:
               loader.value = true;
-
-              if (!isFilter.value) {
-                _context.next = 6;
-                break;
-              }
-
-              _context.next = 4;
-              return store.dispatch("client/indexFilter");
-
-            case 4:
-              _context.next = 8;
-              break;
-
-            case 6:
-              _context.next = 8;
+              _context.next = 3;
               return store.dispatch("client/index");
 
-            case 8:
+            case 3:
               loader.value = false;
 
-            case 9:
+            case 4:
             case "end":
               return _context.stop();
           }
@@ -24681,9 +24688,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("small", _hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.errorsFilter.purchase), 1
       /* TEXT */
       )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [_hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_app_multi_select, {
-        modelValue: $setup.filter.regions,
+        modelValue: $setup.filter.region,
         "onUpdate:modelValue": _cache[7] || (_cache[7] = function ($event) {
-          return $setup.filter.regions = $event;
+          return $setup.filter.region = $event;
         })
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -27066,7 +27073,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   actions: {
-    index: function index(_ref) {
+    index: function index(_ref, payload) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
         var commit, _yield$axios$get, data;
 
@@ -27077,7 +27084,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 commit = _ref.commit;
                 _context.prev = 1;
                 _context.next = 4;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default().get("api/clients");
+                return axios__WEBPACK_IMPORTED_MODULE_1___default().get("api/clients", {
+                  params: payload
+                });
 
               case 4:
                 _yield$axios$get = _context.sent;
@@ -27100,23 +27109,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee, null, [[1, 10]]);
       }))();
     },
-    indexFilter: function indexFilter(_ref2) {
+    indexDeleted: function indexDeleted(_ref2) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var commit, getters, _yield$axios$post, data;
+        var commit, _yield$axios$get2, data;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                commit = _ref2.commit, getters = _ref2.getters;
+                commit = _ref2.commit;
                 _context2.prev = 1;
                 _context2.next = 4;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default().post("api/clients/filter", _index__WEBPACK_IMPORTED_MODULE_3__["default"].getters["clientFilter/getFilter"]);
+                return axios__WEBPACK_IMPORTED_MODULE_1___default().get("api/clients/deleted");
 
               case 4:
-                _yield$axios$post = _context2.sent;
-                data = _yield$axios$post.data;
-                commit("addClients", data.data);
+                _yield$axios$get2 = _context2.sent;
+                data = _yield$axios$get2.data;
+                commit("addClientsDeleted", data.data);
                 commit("remuveError");
                 _context2.next = 13;
                 break;
@@ -27134,54 +27143,51 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee2, null, [[1, 10]]);
       }))();
     },
-    indexDeleted: function indexDeleted(_ref3) {
+    store: function store(_ref3, payload) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
-        var commit, _yield$axios$get2, data;
-
+        var commit, dispatch;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                commit = _ref3.commit;
+                commit = _ref3.commit, dispatch = _ref3.dispatch;
                 _context3.prev = 1;
                 _context3.next = 4;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default().get("api/clients/deleted");
-
-              case 4:
-                _yield$axios$get2 = _context3.sent;
-                data = _yield$axios$get2.data;
-                commit("addClientsDeleted", data.data);
-                commit("remuveError");
-                _context3.next = 13;
-                break;
-
-              case 10:
-                _context3.prev = 10;
-                _context3.t0 = _context3["catch"](1);
-                commit("addErrors", _utils_services_errorHandler__WEBPACK_IMPORTED_MODULE_2___default()(_context3.t0));
-
-              case 13:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3, null, [[1, 10]]);
-      }))();
-    },
-    store: function store(_ref4, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
-        var commit, dispatch;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                commit = _ref4.commit, dispatch = _ref4.dispatch;
-                _context4.prev = 1;
-                _context4.next = 4;
                 return axios__WEBPACK_IMPORTED_MODULE_1___default().post("api/clients", payload);
 
               case 4:
                 dispatch("index");
+                commit("remuveError");
+                _context3.next = 11;
+                break;
+
+              case 8:
+                _context3.prev = 8;
+                _context3.t0 = _context3["catch"](1);
+                commit("addErrors", _utils_services_errorHandler__WEBPACK_IMPORTED_MODULE_2___default()(_context3.t0));
+
+              case 11:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, null, [[1, 8]]);
+      }))();
+    },
+    destroy: function destroy(_ref4, payload) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
+        var commit;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                commit = _ref4.commit;
+                _context4.prev = 1;
+                _context4.next = 4;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default()["delete"]("api/clients/".concat(payload));
+
+              case 4:
+                commit("destroyClient", payload);
                 commit("remuveError");
                 _context4.next = 11;
                 break;
@@ -27199,7 +27205,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee4, null, [[1, 8]]);
       }))();
     },
-    destroy: function destroy(_ref5, payload) {
+    update: function update(_ref5, payload) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
         var commit;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
@@ -27209,10 +27215,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 commit = _ref5.commit;
                 _context5.prev = 1;
                 _context5.next = 4;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default()["delete"]("api/clients/".concat(payload));
+                return axios__WEBPACK_IMPORTED_MODULE_1___default().patch("api/clients/".concat(payload.id), payload);
 
               case 4:
-                commit("destroyClient", payload);
+                commit("updateClients", payload);
                 commit("remuveError");
                 _context5.next = 11;
                 break;
@@ -27228,37 +27234,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee5, null, [[1, 8]]);
-      }))();
-    },
-    update: function update(_ref6, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee6() {
-        var commit;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee6$(_context6) {
-          while (1) {
-            switch (_context6.prev = _context6.next) {
-              case 0:
-                commit = _ref6.commit;
-                _context6.prev = 1;
-                _context6.next = 4;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default().patch("api/clients/".concat(payload.id), payload);
-
-              case 4:
-                commit("updateClients", payload);
-                commit("remuveError");
-                _context6.next = 11;
-                break;
-
-              case 8:
-                _context6.prev = 8;
-                _context6.t0 = _context6["catch"](1);
-                commit("addErrors", _utils_services_errorHandler__WEBPACK_IMPORTED_MODULE_2___default()(_context6.t0));
-
-              case 11:
-              case "end":
-                return _context6.stop();
-            }
-          }
-        }, _callee6, null, [[1, 8]]);
       }))();
     }
   },
@@ -27314,8 +27289,8 @@ var modelFilter = {
   namespaced: true,
   state: function state() {
     return {
-      filter: Object.assign({}, modelFilter),
-      isFilter: !!localStorage.getItem("clientFilter"),
+      filter: {},
+      isFilter: false,
       errors: [],
       errorCount: 0
     };
@@ -27324,12 +27299,10 @@ var modelFilter = {
     addFilter: function addFilter(state, filter) {
       state.isFilter = true;
       state.filter = filter;
-      localStorage.setItem("clientFilter", JSON.stringify(state.filter));
     },
     remuveFilter: function remuveFilter(state) {
       if (state.isFilter) {
-        localStorage.removeItem("clientFilter");
-        state.filter = Object.assign({}, modelFilter);
+        state.filter = {};
         state.isFilter = false;
         _index__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch("client/index");
       }
@@ -27354,8 +27327,6 @@ var modelFilter = {
   getters: {
     getFilter: function getFilter(state) {
       if (state.isFilter) {
-        state.filter = JSON.parse(localStorage.getItem("clientFilter"));
-
         if (state.filter.agreementDateFrom) {
           state.filter.agreementDateFrom = new Date(state.filter.agreementDateFrom);
         }

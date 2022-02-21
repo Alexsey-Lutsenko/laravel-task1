@@ -59,19 +59,9 @@ export default {
         },
     },
     actions: {
-        async index({ commit }) {
+        async index({ commit }, payload) {
             try {
-                const { data } = await axios.get("api/clients");
-                commit("addClients", data.data);
-                commit("remuveError");
-            } catch (e) {
-                commit("addErrors", errorHandler(e));
-            }
-        },
-
-        async indexFilter({ commit, getters }) {
-            try {
-                const { data } = await axios.post("api/clients/filter", store.getters["clientFilter/getFilter"]);
+                const { data } = await axios.get("api/clients", { params: payload });
                 commit("addClients", data.data);
                 commit("remuveError");
             } catch (e) {

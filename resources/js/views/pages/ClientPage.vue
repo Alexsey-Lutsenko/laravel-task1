@@ -111,11 +111,7 @@ export default {
 
         onMounted(async () => {
             loader.value = true;
-            if (isFilter.value) {
-                await store.dispatch("client/indexFilter");
-            } else {
-                await store.dispatch("client/index");
-            }
+            await store.dispatch("client/index");
             loader.value = false;
         });
 

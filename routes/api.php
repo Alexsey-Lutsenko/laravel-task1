@@ -34,7 +34,7 @@ Route::group(['namespace'=>'User', 'prefix'=>'users'], function() {
     Route::post('/', 'StoreController');
     Route::patch('/{user}', 'UpdateController');
     Route::delete('/{user}', 'DestroyController');
-    
+
     Route::group(['namespace'=>'Deleted', 'prefix'=>'deleted'], function() {
         Route::get('/','IndexController');
     });
@@ -48,10 +48,6 @@ Route::group(['namespace'=>'Client', 'prefix'=>'clients'], function() {
 
     Route::group(['namespace'=>'Deleted', 'prefix'=>'deleted'], function() {
         Route::get('/','IndexController');
-    });
-
-    Route::group(['namespace'=>'Filter', 'prefix'=>'filter'], function() {
-        Route::post('/','IndexController');
     });
 });
 
