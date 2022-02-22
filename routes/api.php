@@ -38,6 +38,13 @@ Route::group(['namespace'=>'User', 'prefix'=>'users'], function() {
     Route::group(['namespace'=>'Deleted', 'prefix'=>'deleted'], function() {
         Route::get('/','IndexController');
     });
+
+    Route::group(['namespace'=>'CreateAdmin', 'prefix'=>'create-admin'], function() {
+        Route::get('/','IndexController');
+    });
+    Route::group(['namespace'=>'CreateAdmin', 'prefix'=>'create-admin'], function() {
+        Route::post('/','StoreController');
+    });
 });
 
 Route::group(['namespace'=>'Client', 'prefix'=>'clients'], function() {

@@ -9,7 +9,7 @@ class IndexController extends BaseController
 {
     public function __invoke()
     {
-        $data = User::all();
+        $data = User::whereNull('email')->get();
         return UserResource::collection($data);
     }
 }

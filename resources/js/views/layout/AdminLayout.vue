@@ -5,15 +5,24 @@
             <a class="navbar-brand fw-bold" href="#">Farmer CRM - Админ</a>
         </div>
         <div class="mx-5 nav-menu">
-            <router-link :to="'/auth'">Выйти</router-link>
+            <router-link :to="'/auth'" @click.prevent="logout">Выйти</router-link>
         </div>
     </nav>
     <router-view></router-view>
 </template>
 
 <script>
+import { useStore } from "vuex";
+
 export default {
     name: "MainLayout",
+    setup() {
+        const store = useStore();
+
+        return {
+            logout: () => store.commit("auth/logout"),
+        };
+    },
 };
 </script>
 

@@ -88,6 +88,8 @@ router.beforeEach((to, from, next) => {
         next();
     } else if (requireAuth && !store.getters["auth/isAuthenticated"]) {
         next("/auth?message=auth");
+    } else if (!requireAuth && store.getters["auth/isAuthenticated"]) {
+        next("/");
     } else {
         next();
     }

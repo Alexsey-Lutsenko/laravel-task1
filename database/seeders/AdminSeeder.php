@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
-class DatabaseSeeder extends Seeder
+class AdminSeeder extends Seeder
 {
     /**
      * Seed the application's database.
@@ -16,10 +16,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
-        Role::insert([
-            ['role' => 'admin'],
-            ['role' => 'user']
+         User::insert([
+           ['name' => 'admin',
+           'email' => 'admin@admin',
+           'password' => Hash::make('admin'),
+           'role_id' => 1],
         ]);
     }
 }
