@@ -25,10 +25,9 @@ export default {
             }
         },
 
-        logout(state, dispatch) {
+        logout(state) {
             state.isAuthenticated = null;
             localStorage.removeItem("isAuthenticated");
-            dispatch("getAdmin");
         },
 
         addIsAuthenticatedError(state) {

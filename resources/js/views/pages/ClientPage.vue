@@ -6,12 +6,12 @@
             <app-button-create @create="create"> Новый клиент </app-button-create>
         </div>
         <div class="d-flex">
-            <div class="mx-2">
+            <div>
                 <button class="btn btn-primary" @click="showModalFilter = true">
                     <i class="fa-solid fa-filter"></i>
                 </button>
             </div>
-            <div>
+            <div class="ml-2" v-if="isFilter">
                 <button class="btn btn-danger" @click="deleteFilter">
                     <i class="fa-solid fa-filter-circle-xmark"></i>
                 </button>
@@ -140,6 +140,7 @@ export default {
             errors,
             save,
             formatMoney,
+            isFilter,
             formatDate: (date) => dateFormat(date, "dd.mm.yyyy"),
             create: () => {
                 showModal.value = true;
@@ -175,5 +176,8 @@ export default {
 <style scoped>
 td i:hover {
     cursor: pointer;
+}
+.ml-2 {
+    margin-left: 5px;
 }
 </style>

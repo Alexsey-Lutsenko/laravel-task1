@@ -19,7 +19,7 @@
 
             <div class="d-flex justify-content-center">
                 <app-button-success @click.prevent="login">Войти</app-button-success>
-                <app-button-success class="mx-2" @click.prevent="showModalAdmin = true">Админ</app-button-success>
+                <app-button-success class="mx-2" @click.prevent="getAdmin">Админ</app-button-success>
             </div>
         </form>
     </div>
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { ref, onMounted, computed } from "vue";
+import { ref, computed } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import AdminLoginAuth from "../../components/authComponent/AdminLoginAuth.vue";
@@ -44,15 +44,15 @@ export default {
         const errors = computed(() => store.getters["auth/getErrors"]);
         const authenticatedError = computed(() => store.getters["auth/getIsAuthenticatedError"]);
 
-        onMounted(() => {
-            store.dispatch("auth/getAdmin");
-        });
-
         return {
             user,
             errors,
             showModalAdmin,
             authenticatedError,
+            getAdmin: async () => {
+                await store.dispatch("auth/getAdmin");
+                showModalAdmin.value = true;
+            },
             login: async () => {
                 await store.dispatch("auth/isLogin", user.value);
                 if (authenticatedError) {
