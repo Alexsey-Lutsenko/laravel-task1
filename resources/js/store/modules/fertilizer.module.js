@@ -102,6 +102,20 @@ export default {
             }
         },
 
+        async import({ commit, dispatch }, payload) {
+            try {
+                await axios.post("api/fertilizers/import", payload, {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                });
+                dispatch("index");
+                commit("remuveError");
+            } catch (e) {
+                commit("addErrors", errorHandler(e));
+            }
+        },
+
         async destroy({ commit }, payload) {
             try {
                 await axios.delete(`api/fertilizers/${payload}`);

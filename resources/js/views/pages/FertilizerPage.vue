@@ -4,6 +4,9 @@
     <div class="d-flex w-75 mt-3 mb-2 justify-content-between" v-if="!loader">
         <div>
             <app-button-create @create="create"> Новое удобрение </app-button-create>
+            <div class="mt-1">
+                <fertilizer-import></fertilizer-import>
+            </div>
         </div>
         <div class="d-flex">
             <div>
@@ -126,6 +129,7 @@
 import { ref, onMounted, computed } from "vue";
 import { useStore } from "vuex";
 import FertilizerFilter from "../../components/filterComponent/FertilizerFilter.vue";
+import FertilizerImport from "../../components/importComponent/FertilizerImport.vue";
 
 export default {
     name: "FertilizerPage",
@@ -205,7 +209,7 @@ export default {
             },
         };
     },
-    components: { FertilizerFilter },
+    components: { FertilizerFilter, FertilizerImport },
 };
 </script>
 

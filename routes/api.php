@@ -41,8 +41,6 @@ Route::group(['namespace'=>'User', 'prefix'=>'users'], function() {
 
     Route::group(['namespace'=>'CreateAdmin', 'prefix'=>'create-admin'], function() {
         Route::get('/','IndexController');
-    });
-    Route::group(['namespace'=>'CreateAdmin', 'prefix'=>'create-admin'], function() {
         Route::post('/','StoreController');
     });
 });
@@ -56,6 +54,10 @@ Route::group(['namespace'=>'Client', 'prefix'=>'clients'], function() {
     Route::group(['namespace'=>'Deleted', 'prefix'=>'deleted'], function() {
         Route::get('/','IndexController');
     });
+
+    Route::group(['namespace'=>'Import', 'prefix'=>'import'], function() {
+        Route::post('/','ImportController');
+    });
 });
 
 Route::group(['namespace'=>'Fertilizer', 'prefix'=>'fertilizers'], function() {
@@ -66,6 +68,10 @@ Route::group(['namespace'=>'Fertilizer', 'prefix'=>'fertilizers'], function() {
 
     Route::group(['namespace'=>'Deleted', 'prefix'=>'deleted'], function() {
         Route::get('/','IndexController');
+    });
+
+    Route::group(['namespace'=>'Import', 'prefix'=>'import'], function() {
+        Route::post('/','ImportController');
     });
 });
 

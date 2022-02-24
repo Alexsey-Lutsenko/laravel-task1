@@ -4,6 +4,9 @@
     <div class="d-flex w-50 mt-3 mb-2 justify-content-between" v-if="!loader">
         <div>
             <app-button-create @create="create"> Новый клиент </app-button-create>
+            <div class="mt-1">
+                <client-import></client-import>
+            </div>
         </div>
         <div class="d-flex">
             <div>
@@ -88,6 +91,7 @@ import { ref, onMounted, computed } from "vue";
 import { useStore } from "vuex";
 import dateFormat, { masks } from "dateformat";
 import ClientFilter from "../../components/filterComponent/ClientFilter.vue";
+import ClientImport from "../../components/importComponent/ClientImport.vue";
 
 export default {
     name: "ClientPage",
@@ -169,7 +173,7 @@ export default {
             },
         };
     },
-    components: { ClientFilter },
+    components: { ClientFilter, ClientImport },
 };
 </script>
 
