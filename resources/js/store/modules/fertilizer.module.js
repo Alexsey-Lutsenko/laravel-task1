@@ -12,6 +12,7 @@ export default {
             errorCount: 0,
             regions: [],
             cultures: [],
+            message: "",
         };
     },
     mutations: {
@@ -54,6 +55,10 @@ export default {
             if (i >= 0) {
                 state.fertilizers[i] = payload;
             }
+        },
+
+        setMessage(state, payload) {
+            state.message = payload;
         },
 
         addErrors(state, requests) {
@@ -102,14 +107,13 @@ export default {
             }
         },
 
-        async import({ commit, dispatch }, payload) {
+        async import({ commit }, payload) {
             try {
                 await axios.post("api/fertilizers/import", payload, {
                     headers: {
                         "Content-Type": "multipart/form-data",
                     },
                 });
-                dispatch("index");
                 commit("remuveError");
             } catch (e) {
                 commit("addErrors", errorHandler(e));
@@ -155,6 +159,9 @@ export default {
         },
         getErrorCount(state) {
             return state.errorCount;
+        },
+        getMessage(state) {
+            return state.message;
         },
     },
 };

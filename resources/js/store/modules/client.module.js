@@ -1,4 +1,5 @@
 import axios from "axios";
+import { root } from "postcss";
 import errorHandler from "../../utils/services/errorHandler";
 import store from "../index";
 
@@ -11,6 +12,7 @@ export default {
             regions: [],
             errors: [],
             errorCount: 0,
+            message: "",
         };
     },
     mutations: {
@@ -41,6 +43,10 @@ export default {
             if (i >= 0) {
                 state.clients[i] = payload;
             }
+        },
+
+        setMessage(state, payload) {
+            state.message = payload;
         },
 
         addErrors(state, requests) {
@@ -89,14 +95,13 @@ export default {
             }
         },
 
-        async import({ commit, dispatch }, payload) {
+        async import({ commit }, payload) {
             try {
                 await axios.post("api/clients/import", payload, {
                     headers: {
                         "Content-Type": "multipart/form-data",
                     },
                 });
-                dispatch("index");
                 commit("remuveError");
             } catch (e) {
                 commit("addErrors", errorHandler(e));
@@ -138,6 +143,9 @@ export default {
         },
         getErrorCount(state) {
             return state.errorCount;
+        },
+        getMessage(state) {
+            return state.message;
         },
     },
 };

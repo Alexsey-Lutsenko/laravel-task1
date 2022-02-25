@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers\Client\Import;
 
-
-use App\Imports\ClientsImport;
-
 use Illuminate\Http\Request;
-use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
+use App\Jobs\UploadClientsJob;
 
 class ImportController extends Controller
 {
@@ -16,8 +13,12 @@ class ImportController extends Controller
 
     public function __invoke(Request $request)
     {
-        $filePath = $request->file('files');
-        Excel::import(new ClientsImport(), $filePath);
+        $file = $request->file('files');
+        $filePath = $file->storeAs('imports', 'clients.' . $file->getClientOriginalExtension());
+
+        UploadClientsJob::dispatchSync($filePath);
+
+        return response(["messages" => "Данные импортированы"], 200);
     }
 }
 

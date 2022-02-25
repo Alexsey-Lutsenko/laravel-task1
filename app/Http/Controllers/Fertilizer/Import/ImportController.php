@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Fertilizer\Import;
 
-use App\Imports\FertilizersImport;
 use Illuminate\Http\Request;
-use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
+use App\Jobs\UploadFertilizersJob;
 
 class ImportController extends Controller
 {
@@ -14,8 +13,12 @@ class ImportController extends Controller
 
     public function __invoke(Request $request)
     {
-        $filePath = $request->file('files');
-        Excel::import(new FertilizersImport(), $filePath);
+        $file = $request->file('files');
+        $filePath = $file->storeAs('imports', 'fertilizers.' . $file->getClientOriginalExtension());
+
+        UploadFertilizersJob::dispatchSync($filePath);
+
+        return response(["messages" => "Данные импортированы"], 200);
     }
 }
 

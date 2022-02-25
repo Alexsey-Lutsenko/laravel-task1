@@ -1,41 +1,40 @@
 <template>
-    <p>
+    <div>
         <input type="file" ref="file" id="file" />
-        <input type="submit" value="Отправить" @click.prevent="submitFile" />
-        <small class="mx-2" v-if="fileMessage">{{ fileMessage }}</small>
-    </p>
+        <input class="btn btn-success" type="submit" value="Отправить" @click.prevent="submitFile" />
+        <small class="mx-2" v-if="message">{{ message }}</small>
+    </div>
 </template>
 
 <script>
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { useStore } from "vuex";
 
 export default {
-    name: "ClientImport",
-    emits: ["submitFile"],
+    name: "FertilizerImport",
     setup(props, { emit }) {
         const store = useStore();
         const file = ref(null);
-        const fileMessage = ref("");
+
+        const message = computed(() => store.getters["client/getMessage"]);
 
         return {
             file,
-            fileMessage,
+            message,
             submitFile: async () => {
-                emit("submitFile");
-
                 if (file.value.files.length > 0) {
-                    fileMessage.value = "";
                     let formData = new FormData();
                     formData.append("files", file.value.files[0]);
+
+                    store.commit("client/setMessage", "Данные импортируются");
                     await store.dispatch("client/import", formData);
-                    fileMessage.value = "Данные успешно добавлены";
-                    setTimeout(() => {
-                        fileMessage.value = "";
-                    }, 3000);
+
+                    store.commit("client/setMessage", "Данные обновляются");
+                    await store.dispatch("client/index");
+                    store.commit("client/setMessage", "");
                     file.value.value = "";
                 } else {
-                    fileMessage.value = "Выберите файлы для отправки";
+                    store.commit("client/setMessage", "Данные не выбраны");
                 }
             },
         };
@@ -43,4 +42,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+#file {
+    width: 200px;
+}
+</style>

@@ -2,9 +2,9 @@
     <h1>Управление клиентами</h1>
 
     <div class="d-flex w-50 mt-3 mb-2 justify-content-between" v-if="!loader">
-        <div>
+        <div class="d-flex">
             <app-button-create @create="create"> Новый клиент </app-button-create>
-            <div class="mt-1">
+            <div class="mx-2">
                 <client-import></client-import>
             </div>
         </div>
