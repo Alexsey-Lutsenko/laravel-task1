@@ -1,7 +1,7 @@
 <template>
-    <div>
-        <input type="file" ref="file" id="file" />
-        <input class="btn btn-success" type="submit" value="Отправить" @click.prevent="submitFile" />
+    <div class="d-flex align-items-center">
+        <input class="form-control" type="file" ref="file" id="file" />
+        <input class="btn btn-success" id="btn-upload" type="submit" value="Отправить" @click.prevent="submitFile" />
         <small class="mx-2" v-if="message">{{ message }}</small>
     </div>
 </template>
@@ -44,6 +44,10 @@ export default {
 
 <style>
 #file {
-    width: 200px;
+    width: 230px !important;
+    border-radius: 5px 0 0 5px;
+}
+#btn-upload {
+    border-radius: 0 5px 5px 0;
 }
 </style>
