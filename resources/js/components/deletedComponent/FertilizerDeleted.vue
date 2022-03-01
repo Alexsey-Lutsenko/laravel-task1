@@ -19,7 +19,7 @@
             </tr>
         </template>
         <template v-slot:tbody>
-            <tr v-for="fertilizer of fertilizers" :key="fertilizer.id" class="text-center">
+            <tr v-for="fertilizer of fertilizers.data" :key="fertilizer.id" class="text-center">
                 <td>{{ fertilizer.fertilizer }}</td>
                 <td>{{ fertilizer.normN }}</td>
                 <td>{{ fertilizer.normP }}</td>
@@ -31,11 +31,15 @@
             </tr>
         </template>
     </app-table>
+    <div class="d-flex w-100 justify-content-center">
+        <Pagination :data="fertilizers" @pagination-change-page="getResults" />
+    </div>
 </template>
 
 <script>
 import { ref, onMounted, computed } from "vue";
 import { useStore } from "vuex";
+import LaravelVuePagination from "laravel-vue-pagination";
 
 export default {
     name: "FertilizerDeleted",
@@ -57,8 +61,12 @@ export default {
             loader,
             fertilizers,
             formatMoney,
+            getResults: (page = 1) => {
+                store.dispatch("fertilizer/indexDeleted", page);
+            },
         };
     },
+    components: { Pagination: LaravelVuePagination },
 };
 </script>
 

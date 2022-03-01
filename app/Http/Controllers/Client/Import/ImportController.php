@@ -8,9 +8,6 @@ use App\Jobs\UploadClientsJob;
 
 class ImportController extends Controller
 {
-    protected $signature = 'excel:import:indexes';
-    protected $description = 'Импорт показателей';
-
     public function __invoke(Request $request)
     {
         $file = $request->file('files');

@@ -10,7 +10,7 @@ class IndexController extends Controller
 {
     public function __invoke()
     {
-        $data = Client::onlyTrashed()->get();
+        $data = Client::onlyTrashed()->orderBy('deleted_at', 'desc')->paginate(10);
         return ClientResource::collection($data);
     }
 }

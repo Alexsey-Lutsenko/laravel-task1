@@ -7,6 +7,7 @@ import client from "./modules/client.module";
 import fertilizer from "./modules/fertilizer.module";
 import clientFilter from "./modules/clientFilter.module";
 import fertilizerFilter from "./modules/fertilizerFilter.module";
+import importStatus from "./modules/importStatus.module";
 
 export default new Vuex.Store({
     modules: {
@@ -18,5 +19,6 @@ export default new Vuex.Store({
         fertilizer,
         clientFilter,
         fertilizerFilter,
+        importStatus,
     },
 });

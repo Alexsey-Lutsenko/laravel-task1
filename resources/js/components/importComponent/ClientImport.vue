@@ -17,6 +17,7 @@ export default {
         const file = ref(null);
 
         const message = computed(() => store.getters["client/getMessage"]);
+        const user = computed(() => store.getters["auth/getAdmin"]);
 
         return {
             file,
@@ -26,10 +27,7 @@ export default {
                     let formData = new FormData();
                     formData.append("files", file.value.files[0]);
 
-                    store.commit("client/setMessage", "Данные импортируются");
-                    await store.dispatch("client/import", formData);
-
-                    store.commit("client/setMessage", "Данные обновляются");
+                    await store.dispatch("client/import", { formData: formData, user_id: user.value.id, data: "Клиенты" });
                     await store.dispatch("client/index");
                     store.commit("client/setMessage", "");
                     file.value.value = "";

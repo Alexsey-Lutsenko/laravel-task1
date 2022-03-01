@@ -10,7 +10,7 @@ class IndexController extends Controller
 {
     public function __invoke()
     {
-        $data = Fertilizer::onlyTrashed()->get();
+        $data = Fertilizer::onlyTrashed()->orderBy('deleted_at', 'desc')->paginate(10);
         return FertilizerResourceDeleted::collection($data);
     }
 }

@@ -31,6 +31,9 @@ class UploadFertilizersJob implements ShouldQueue
      *
      * @return void
      */
+    protected $signature = 'excel:import:fertilizers';
+    protected $description = 'Импорт показателей';
+
     public function handle()
     {
         Excel::import(new FertilizersImport(), $this->path, 'local');

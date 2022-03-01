@@ -8,10 +8,7 @@ import ClientPage from "../views/pages/ClientPage";
 import CulturePage from "../views/pages/CulturePage";
 import UserPage from "../views/pages/UserPage";
 import DeletedPage from "../views/pages/DeletedPage";
-import UserDeleted from "../components/deletedComponent/UserDeleted";
-import ClientDeleted from "../components/deletedComponent/ClientDeleted";
-import CultureDeleted from "../components/deletedComponent/CultureDeleted";
-import FertilizerDeleted from "../components/deletedComponent/FertilizerDeleted";
+import ImportStatusPage from "../views/pages/ImportStatusPage";
 
 const routes = [
     {
@@ -51,6 +48,11 @@ const routes = [
                 path: "/deleted",
                 name: DeletedPage,
                 component: DeletedPage,
+            },
+            {
+                path: "/import-status",
+                name: ImportStatusPage,
+                component: ImportStatusPage,
             },
         ],
     },

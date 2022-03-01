@@ -75,10 +75,10 @@ export default {
             }
         },
 
-        async indexDeleted({ commit }) {
+        async indexDeleted({ commit }, page = 1) {
             try {
-                const { data } = await axios.get("api/clients/deleted");
-                commit("addClientsDeleted", data.data);
+                const { data } = await axios.get("api/clients/deleted?page=" + page);
+                commit("addClientsDeleted", data);
                 commit("remuveError");
             } catch (e) {
                 commit("addErrors", errorHandler(e));
@@ -97,13 +97,16 @@ export default {
 
         async import({ commit }, payload) {
             try {
-                await axios.post("api/clients/import", payload, {
+                await store.dispatch("importStatus/store", { status: "В процессе", user_id: payload.user_id, data: payload.data });
+                await axios.post("api/clients/import", payload.formData, {
                     headers: {
                         "Content-Type": "multipart/form-data",
                     },
                 });
+                await store.dispatch("importStatus/store", { status: "Данные успешно импортированы", user_id: payload.user_id, data: payload.data });
                 commit("remuveError");
             } catch (e) {
+                await store.dispatch("importStatus/store", { status: "Ошибка во время импорта", user_id: payload.user_id, data: payload.data });
                 commit("addErrors", errorHandler(e));
             }
         },

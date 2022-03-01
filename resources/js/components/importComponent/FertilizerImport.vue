@@ -17,6 +17,7 @@ export default {
         const file = ref(null);
 
         const message = computed(() => store.getters["fertilizer/getMessage"]);
+        const user = computed(() => store.getters["auth/getAdmin"]);
 
         return {
             file,
@@ -26,10 +27,7 @@ export default {
                     let formData = new FormData();
                     formData.append("files", file.value.files[0]);
 
-                    store.commit("fertilizer/setMessage", "Данные импортируются");
-                    await store.dispatch("fertilizer/import", formData);
-
-                    store.commit("fertilizer/setMessage", "Данные обновляются");
+                    await store.dispatch("fertilizer/import", { formData: formData, user_id: user.value.id, data: "Удобрения" });
                     await store.dispatch("fertilizer/index");
                     store.commit("fertilizer/setMessage", "");
                     file.value.value = "";

@@ -15,7 +15,7 @@
             </tr>
         </template>
         <template v-slot:tbody>
-            <tr v-for="client of clients" :key="client.id" class="text-center">
+            <tr v-for="client of clients.data" :key="client.id" class="text-center">
                 <td>{{ client.client }}</td>
                 <td>{{ formatDate(client.agreementDate) }}</td>
                 <td>{{ formatMoney.format(client.purchase) }}</td>
@@ -23,12 +23,16 @@
             </tr>
         </template>
     </app-table>
+    <div class="d-flex w-100 justify-content-center">
+        <Pagination :data="clients" @pagination-change-page="getResults" />
+    </div>
 </template>
 
 <script>
 import { ref, onMounted, computed } from "vue";
 import { useStore } from "vuex";
 import dateFormat, { masks } from "dateformat";
+import LaravelVuePagination from "laravel-vue-pagination";
 
 export default {
     name: "ClientDeleted",
@@ -51,8 +55,12 @@ export default {
             clients,
             formatMoney,
             formatDate: (date) => dateFormat(date, "dd.mm.yyyy"),
+            getResults: (page = 1) => {
+                store.dispatch("client/indexDeleted", page);
+            },
         };
     },
+    components: { Pagination: LaravelVuePagination },
 };
 </script>
 

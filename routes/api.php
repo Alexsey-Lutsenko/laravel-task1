@@ -78,3 +78,8 @@ Route::group(['namespace'=>'Fertilizer', 'prefix'=>'fertilizers'], function() {
 Route::group(['namespace'=>'Role', 'prefix'=>'roles'], function() {
     Route::get('/','IndexController');
 });
+
+Route::group(['namespace'=>'ImportStatus', 'prefix'=>'import-status'], function() {
+    Route::get('/','IndexController');
+    Route::post('/','StoreController');
+});

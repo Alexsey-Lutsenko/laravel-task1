@@ -18,6 +18,6 @@ class IndexController extends Controller
 
         $user = User::where('email', 'admin@admin')->get();
 
-        return response()->json(['data'=> ['email' => $user[0]->email, 'password' => 'admin']], 200);
+        return response()->json(['data'=> ['email' => $user[0]->email, 'password' => 'admin', 'id' => $user[0]->id]], 200);
     }
 }

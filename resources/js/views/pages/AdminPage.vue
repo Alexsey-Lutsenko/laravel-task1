@@ -21,6 +21,10 @@
                     <router-link :to="'/user'">Пользователи</router-link>
                 </li>
                 <li>
+                    <i class="fa-solid fa-file-import icon-custom-import"></i>
+                    <router-link :to="'/import-status'">Импорт</router-link>
+                </li>
+                <li>
                     <i class="fa-solid fa-trash-can-arrow-up icon-custom-remuve"></i>
                     <router-link :to="'/deleted'">Удаленное</router-link>
                 </li>
@@ -78,6 +82,11 @@ export default {
 .icon-custom-remuve {
     margin-right: 5px;
     color: rgb(192, 93, 93);
+}
+.icon-custom-import {
+    margin-right: 5px;
+    margin-left: -2px;
+    color: rgb(93, 192, 109);
 }
 .fa-person.icon-custom {
     font-size: 25px;

@@ -33,6 +33,9 @@ class UploadClientsJob implements ShouldQueue
      *
      * @return void
      */
+    protected $signature = 'excel:import:clients';
+    protected $description = 'Импорт показателей';
+
     public function handle()
     {
         Excel::import(new ClientsImport(), $this->path, 'local');
