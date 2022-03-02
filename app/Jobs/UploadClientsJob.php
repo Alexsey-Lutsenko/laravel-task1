@@ -38,6 +38,15 @@ class UploadClientsJob implements ShouldQueue
 
     public function handle()
     {
+        $import = new ClientsImport();
         Excel::import(new ClientsImport(), $this->path, 'local');
+
+        foreach ($import->failures() as $failure) {
+            dd($failure);
+            $failure->row(); // row that went wrong
+            $failure->attribute(); // either heading key (if using heading row concern) or column index
+            $failure->errors(); // Actual error messages from Laravel validator
+            $failure->values(); // The values of the row that has failed.
+       }
     }
 }
