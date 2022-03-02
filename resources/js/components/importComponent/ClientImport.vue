@@ -26,11 +26,14 @@ export default {
                 if (file.value.files.length > 0) {
                     let formData = new FormData();
                     formData.append("files", file.value.files[0]);
+                    formData.append("user_id", user.value.id);
+                    formData.append("data", "Клиенты");
 
                     await store.dispatch("client/import", { formData: formData, user_id: user.value.id, data: "Клиенты" });
                     await store.dispatch("client/index");
-                    store.commit("client/setMessage", "");
+                    store.commit("client/setMessage", "Импорт завершен");
                     file.value.value = "";
+                    setTimeout(() => store.commit("client/setMessage", ""), 2000);
                 } else {
                     store.commit("client/setMessage", "Данные не выбраны");
                 }

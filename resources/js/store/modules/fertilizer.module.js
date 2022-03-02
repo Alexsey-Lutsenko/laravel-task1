@@ -110,24 +110,11 @@ export default {
         async import({ commit }, payload) {
             try {
                 await store.dispatch("importStatus/store", { status: "В процессе", user_id: payload.user_id, data: payload.data });
-                await axios
-                    .post("api/fertilizers/import", payload.formData, {
-                        headers: {
-                            "Content-Type": "multipart/form-data",
-                        },
-                    })
-                    .then(async (res) => {
-                        if (res.data.errorsImport) {
-                            await store.dispatch("importStatus/store", {
-                                status: res.data.messages,
-                                errors_array: res.data.errorsImport,
-                                user_id: payload.user_id,
-                                data: payload.data,
-                            });
-                        } else {
-                            await store.dispatch("importStatus/store", { status: res.data.messages, user_id: payload.user_id, data: payload.data });
-                        }
-                    });
+                await axios.post("api/fertilizers/import", payload.formData, {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                });
                 commit("remuveError");
             } catch (e) {
                 await store.dispatch("importStatus/store", { status: "Ошибка во время импорта", user_id: payload.user_id, data: payload.data });

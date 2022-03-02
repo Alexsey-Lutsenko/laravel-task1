@@ -26,11 +26,14 @@ export default {
                 if (file.value.files.length > 0) {
                     let formData = new FormData();
                     formData.append("files", file.value.files[0]);
+                    formData.append("user_id", user.value.id);
+                    formData.append("data", "Клиенты");
 
                     await store.dispatch("fertilizer/import", { formData: formData, user_id: user.value.id, data: "Удобрения" });
                     await store.dispatch("fertilizer/index");
-                    store.commit("fertilizer/setMessage", "");
+                    store.commit("fertilizer/setMessage", "Импорт завершен");
                     file.value.value = "";
+                    setTimeout(() => store.commit("fertilizer/setMessage", ""), 2000);
                 } else {
                     store.commit("fertilizer/setMessage", "Данные не выбраны");
                 }

@@ -23229,33 +23229,38 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               switch (_context.prev = _context.next) {
                 case 0:
                   if (!(file.value.files.length > 0)) {
-                    _context.next = 11;
+                    _context.next = 14;
                     break;
                   }
 
                   formData = new FormData();
                   formData.append("files", file.value.files[0]);
-                  _context.next = 5;
+                  formData.append("user_id", user.value.id);
+                  formData.append("data", "Клиенты");
+                  _context.next = 7;
                   return store.dispatch("client/import", {
                     formData: formData,
                     user_id: user.value.id,
                     data: "Клиенты"
                   });
 
-                case 5:
-                  _context.next = 7;
+                case 7:
+                  _context.next = 9;
                   return store.dispatch("client/index");
 
-                case 7:
-                  store.commit("client/setMessage", "");
+                case 9:
+                  store.commit("client/setMessage", "Импорт завершен");
                   file.value.value = "";
-                  _context.next = 12;
+                  setTimeout(function () {
+                    return store.commit("client/setMessage", "");
+                  }, 2000);
+                  _context.next = 15;
                   break;
 
-                case 11:
+                case 14:
                   store.commit("client/setMessage", "Данные не выбраны");
 
-                case 12:
+                case 15:
                 case "end":
                   return _context.stop();
               }
@@ -23321,33 +23326,38 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               switch (_context.prev = _context.next) {
                 case 0:
                   if (!(file.value.files.length > 0)) {
-                    _context.next = 11;
+                    _context.next = 14;
                     break;
                   }
 
                   formData = new FormData();
                   formData.append("files", file.value.files[0]);
-                  _context.next = 5;
+                  formData.append("user_id", user.value.id);
+                  formData.append("data", "Клиенты");
+                  _context.next = 7;
                   return store.dispatch("fertilizer/import", {
                     formData: formData,
                     user_id: user.value.id,
                     data: "Удобрения"
                   });
 
-                case 5:
-                  _context.next = 7;
+                case 7:
+                  _context.next = 9;
                   return store.dispatch("fertilizer/index");
 
-                case 7:
-                  store.commit("fertilizer/setMessage", "");
+                case 9:
+                  store.commit("fertilizer/setMessage", "Импорт завершен");
                   file.value.value = "";
-                  _context.next = 12;
+                  setTimeout(function () {
+                    return store.commit("fertilizer/setMessage", "");
+                  }, 2000);
+                  _context.next = 15;
                   break;
 
-                case 11:
+                case 14:
                   store.commit("fertilizer/setMessage", "Данные не выбраны");
 
-                case 12:
+                case 15:
                 case "end":
                   return _context.stop();
               }
@@ -28699,15 +28709,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     "import": function _import(_ref4, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
         var commit;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context5.prev = _context5.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
                 commit = _ref4.commit;
-                _context5.prev = 1;
-                _context5.next = 4;
+                _context4.prev = 1;
+                _context4.next = 4;
                 return _index__WEBPACK_IMPORTED_MODULE_4__["default"].dispatch("importStatus/store", {
                   status: "В процессе",
                   user_id: payload.user_id,
@@ -28715,64 +28725,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
               case 4:
-                _context5.next = 6;
+                _context4.next = 6;
                 return axios__WEBPACK_IMPORTED_MODULE_1___default().post("api/clients/import", payload.formData, {
                   headers: {
                     "Content-Type": "multipart/form-data"
                   }
-                }).then( /*#__PURE__*/function () {
-                  var _ref5 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4(res) {
-                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
-                      while (1) {
-                        switch (_context4.prev = _context4.next) {
-                          case 0:
-                            if (!res.data.errorsImport) {
-                              _context4.next = 5;
-                              break;
-                            }
-
-                            _context4.next = 3;
-                            return _index__WEBPACK_IMPORTED_MODULE_4__["default"].dispatch("importStatus/store", {
-                              status: res.data.messages,
-                              errors_array: res.data.errorsImport,
-                              user_id: payload.user_id,
-                              data: payload.data
-                            });
-
-                          case 3:
-                            _context4.next = 7;
-                            break;
-
-                          case 5:
-                            _context4.next = 7;
-                            return _index__WEBPACK_IMPORTED_MODULE_4__["default"].dispatch("importStatus/store", {
-                              status: res.data.messages,
-                              user_id: payload.user_id,
-                              data: payload.data
-                            });
-
-                          case 7:
-                          case "end":
-                            return _context4.stop();
-                        }
-                      }
-                    }, _callee4);
-                  }));
-
-                  return function (_x) {
-                    return _ref5.apply(this, arguments);
-                  };
-                }());
+                });
 
               case 6:
                 commit("remuveError");
-                _context5.next = 14;
+                _context4.next = 14;
                 break;
 
               case 9:
-                _context5.prev = 9;
-                _context5.t0 = _context5["catch"](1);
-                _context5.next = 13;
+                _context4.prev = 9;
+                _context4.t0 = _context4["catch"](1);
+                _context4.next = 13;
                 return _index__WEBPACK_IMPORTED_MODULE_4__["default"].dispatch("importStatus/store", {
                   status: "Ошибка во время импорта",
                   user_id: payload.user_id,
@@ -28780,17 +28748,48 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
               case 13:
-                commit("addErrors", _utils_services_errorHandler__WEBPACK_IMPORTED_MODULE_3___default()(_context5.t0));
+                commit("addErrors", _utils_services_errorHandler__WEBPACK_IMPORTED_MODULE_3___default()(_context4.t0));
 
               case 14:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, null, [[1, 9]]);
+      }))();
+    },
+    destroy: function destroy(_ref5, payload) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
+        var commit;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                commit = _ref5.commit;
+                _context5.prev = 1;
+                _context5.next = 4;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default()["delete"]("api/clients/".concat(payload));
+
+              case 4:
+                commit("destroyClient", payload);
+                commit("remuveError");
+                _context5.next = 11;
+                break;
+
+              case 8:
+                _context5.prev = 8;
+                _context5.t0 = _context5["catch"](1);
+                commit("addErrors", _utils_services_errorHandler__WEBPACK_IMPORTED_MODULE_3___default()(_context5.t0));
+
+              case 11:
               case "end":
                 return _context5.stop();
             }
           }
-        }, _callee5, null, [[1, 9]]);
+        }, _callee5, null, [[1, 8]]);
       }))();
     },
-    destroy: function destroy(_ref6, payload) {
+    update: function update(_ref6, payload) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee6() {
         var commit;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee6$(_context6) {
@@ -28800,10 +28799,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 commit = _ref6.commit;
                 _context6.prev = 1;
                 _context6.next = 4;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default()["delete"]("api/clients/".concat(payload));
+                return axios__WEBPACK_IMPORTED_MODULE_1___default().patch("api/clients/".concat(payload.id), payload);
 
               case 4:
-                commit("destroyClient", payload);
+                commit("updateClients", payload);
                 commit("remuveError");
                 _context6.next = 11;
                 break;
@@ -28819,37 +28818,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee6, null, [[1, 8]]);
-      }))();
-    },
-    update: function update(_ref7, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee7() {
-        var commit;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee7$(_context7) {
-          while (1) {
-            switch (_context7.prev = _context7.next) {
-              case 0:
-                commit = _ref7.commit;
-                _context7.prev = 1;
-                _context7.next = 4;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default().patch("api/clients/".concat(payload.id), payload);
-
-              case 4:
-                commit("updateClients", payload);
-                commit("remuveError");
-                _context7.next = 11;
-                break;
-
-              case 8:
-                _context7.prev = 8;
-                _context7.t0 = _context7["catch"](1);
-                commit("addErrors", _utils_services_errorHandler__WEBPACK_IMPORTED_MODULE_3___default()(_context7.t0));
-
-              case 11:
-              case "end":
-                return _context7.stop();
-            }
-          }
-        }, _callee7, null, [[1, 8]]);
       }))();
     }
   },
@@ -29432,15 +29400,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     "import": function _import(_ref4, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
         var commit;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context5.prev = _context5.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
                 commit = _ref4.commit;
-                _context5.prev = 1;
-                _context5.next = 4;
+                _context4.prev = 1;
+                _context4.next = 4;
                 return _index__WEBPACK_IMPORTED_MODULE_3__["default"].dispatch("importStatus/store", {
                   status: "В процессе",
                   user_id: payload.user_id,
@@ -29448,64 +29416,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
               case 4:
-                _context5.next = 6;
+                _context4.next = 6;
                 return axios__WEBPACK_IMPORTED_MODULE_1___default().post("api/fertilizers/import", payload.formData, {
                   headers: {
                     "Content-Type": "multipart/form-data"
                   }
-                }).then( /*#__PURE__*/function () {
-                  var _ref5 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4(res) {
-                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
-                      while (1) {
-                        switch (_context4.prev = _context4.next) {
-                          case 0:
-                            if (!res.data.errorsImport) {
-                              _context4.next = 5;
-                              break;
-                            }
-
-                            _context4.next = 3;
-                            return _index__WEBPACK_IMPORTED_MODULE_3__["default"].dispatch("importStatus/store", {
-                              status: res.data.messages,
-                              errors_array: res.data.errorsImport,
-                              user_id: payload.user_id,
-                              data: payload.data
-                            });
-
-                          case 3:
-                            _context4.next = 7;
-                            break;
-
-                          case 5:
-                            _context4.next = 7;
-                            return _index__WEBPACK_IMPORTED_MODULE_3__["default"].dispatch("importStatus/store", {
-                              status: res.data.messages,
-                              user_id: payload.user_id,
-                              data: payload.data
-                            });
-
-                          case 7:
-                          case "end":
-                            return _context4.stop();
-                        }
-                      }
-                    }, _callee4);
-                  }));
-
-                  return function (_x) {
-                    return _ref5.apply(this, arguments);
-                  };
-                }());
+                });
 
               case 6:
                 commit("remuveError");
-                _context5.next = 14;
+                _context4.next = 14;
                 break;
 
               case 9:
-                _context5.prev = 9;
-                _context5.t0 = _context5["catch"](1);
-                _context5.next = 13;
+                _context4.prev = 9;
+                _context4.t0 = _context4["catch"](1);
+                _context4.next = 13;
                 return _index__WEBPACK_IMPORTED_MODULE_3__["default"].dispatch("importStatus/store", {
                   status: "Ошибка во время импорта",
                   user_id: payload.user_id,
@@ -29513,19 +29439,49 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
               case 13:
-                commit("addErrors", _utils_services_errorHandler__WEBPACK_IMPORTED_MODULE_2___default()(_context5.t0));
+                commit("addErrors", _utils_services_errorHandler__WEBPACK_IMPORTED_MODULE_2___default()(_context4.t0));
 
               case 14:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, null, [[1, 9]]);
+      }))();
+    },
+    destroy: function destroy(_ref5, payload) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
+        var commit;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                commit = _ref5.commit;
+                _context5.prev = 1;
+                _context5.next = 4;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default()["delete"]("api/fertilizers/".concat(payload));
+
+              case 4:
+                commit("destroyFertilizer", payload);
+                _context5.next = 10;
+                break;
+
+              case 7:
+                _context5.prev = 7;
+                _context5.t0 = _context5["catch"](1);
+                commit("addErrors", _utils_services_errorHandler__WEBPACK_IMPORTED_MODULE_2___default()(_context5.t0));
+
+              case 10:
               case "end":
                 return _context5.stop();
             }
           }
-        }, _callee5, null, [[1, 9]]);
+        }, _callee5, null, [[1, 7]]);
       }))();
     },
-    destroy: function destroy(_ref6, payload) {
+    update: function update(_ref6, payload) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee6() {
-        var commit;
+        var commit, culture;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee6$(_context6) {
           while (1) {
             switch (_context6.prev = _context6.next) {
@@ -29533,36 +29489,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 commit = _ref6.commit;
                 _context6.prev = 1;
                 _context6.next = 4;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default()["delete"]("api/fertilizers/".concat(payload));
-
-              case 4:
-                commit("destroyFertilizer", payload);
-                _context6.next = 10;
-                break;
-
-              case 7:
-                _context6.prev = 7;
-                _context6.t0 = _context6["catch"](1);
-                commit("addErrors", _utils_services_errorHandler__WEBPACK_IMPORTED_MODULE_2___default()(_context6.t0));
-
-              case 10:
-              case "end":
-                return _context6.stop();
-            }
-          }
-        }, _callee6, null, [[1, 7]]);
-      }))();
-    },
-    update: function update(_ref7, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee7() {
-        var commit, culture;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee7$(_context7) {
-          while (1) {
-            switch (_context7.prev = _context7.next) {
-              case 0:
-                commit = _ref7.commit;
-                _context7.prev = 1;
-                _context7.next = 4;
                 return axios__WEBPACK_IMPORTED_MODULE_1___default().patch("api/fertilizers/".concat(payload.id), payload);
 
               case 4:
@@ -29572,20 +29498,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 payload.culture = culture.culture;
                 commit("updateFertilizers", payload);
                 commit("remuveError");
-                _context7.next = 13;
+                _context6.next = 13;
                 break;
 
               case 10:
-                _context7.prev = 10;
-                _context7.t0 = _context7["catch"](1);
-                commit("addErrors", _utils_services_errorHandler__WEBPACK_IMPORTED_MODULE_2___default()(_context7.t0));
+                _context6.prev = 10;
+                _context6.t0 = _context6["catch"](1);
+                commit("addErrors", _utils_services_errorHandler__WEBPACK_IMPORTED_MODULE_2___default()(_context6.t0));
 
               case 13:
               case "end":
-                return _context7.stop();
+                return _context6.stop();
             }
           }
-        }, _callee7, null, [[1, 10]]);
+        }, _callee6, null, [[1, 10]]);
       }))();
     }
   },

@@ -9,7 +9,7 @@ class IndexController
 {
     public function __invoke()
     {
-        $data = ImportStatus::orderBy('created_at', 'desc')->paginate(10);
+        $data = ImportStatus::orderBy('id', 'desc')->paginate(10);
         return ImportStatusResource::collection($data);
     }
 }
