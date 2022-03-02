@@ -17,6 +17,7 @@ class ImportStatusResource extends JsonResource
         return [
             'id' => $this->id,
             'status' => $this->status,
+            'errors_array' => $this->errors_array,
             'data' => $this->data,
             'created_at' => $this->created_at,
             'user_id'=> $this->user->id,

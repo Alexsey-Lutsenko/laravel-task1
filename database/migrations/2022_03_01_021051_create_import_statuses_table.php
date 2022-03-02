@@ -17,6 +17,7 @@ class CreateImportStatusesTable extends Migration
             $table->id();
             $table->string('status');
             $table->string('data');
+            $table->jsonb('errors_array')->nullable();
             $table->timestamps();
 
             $table->foreignId('user_id')->index()->constrained('users');

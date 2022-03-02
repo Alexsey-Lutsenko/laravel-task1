@@ -24,7 +24,6 @@ export default {
                 console.error("ERROR: ", requests.message);
             }
         },
-
         remuveError(state) {
             state.errorCount = 0;
             state.errors = [];

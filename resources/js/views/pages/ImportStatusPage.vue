@@ -5,11 +5,12 @@
         <app-loader v-if="loader"></app-loader>
     </div>
 
-    <app-table class="w-50 mt-3" v-if="!loader">
+    <app-table class="w-100 mt-3" v-if="!loader">
         <template v-slot:thead>
             <tr>
                 <th>Статус</th>
                 <th>Таблица</th>
+                <th>Описание ошибки</th>
                 <th>Пользователь</th>
                 <th>Дата статуса</th>
             </tr>
@@ -18,6 +19,7 @@
             <tr v-for="i of imports.data" :key="i.id" class="text-center">
                 <td>{{ i.status }}</td>
                 <td>{{ i.data }}</td>
+                <td class="errors_text">{{ formatter(i.errors_array) }}</td>
                 <td>{{ i.user }}</td>
                 <td>{{ formatDate(i.created_at) }}</td>
             </tr>
@@ -53,6 +55,19 @@ export default {
             getResults: (page = 1) => {
                 store.dispatch("importStatus/index", page);
             },
+            formatter: (errors_array) => {
+                if (errors_array) {
+                    const errors = JSON.parse(errors_array);
+                    const processedErrors = [];
+
+                    errors.forEach((element) => {
+                        if (!processedErrors.includes("Строка:" + element.row + " -> " + element.field + " - " + element.errors.join("|"))) {
+                            processedErrors.push("Строка:" + element.row + " -> " + element.field + " - " + element.errors.join("|"));
+                        }
+                    });
+                    return processedErrors.join("; ");
+                }
+            },
         };
     },
     components: {
@@ -61,4 +76,10 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.errors_text {
+    font-size: 12px;
+    max-width: 500px;
+    text-align: left;
+}
+</style>

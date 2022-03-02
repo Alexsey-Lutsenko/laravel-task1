@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use Illuminate\Bus\Queueable;
+// use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -14,7 +14,7 @@ use App\Imports\ClientsImport;
 
 class UploadClientsJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable, InteractsWithQueue, /*Queueable,*/ SerializesModels;
 
 
     private $path;
@@ -39,14 +39,17 @@ class UploadClientsJob implements ShouldQueue
     public function handle()
     {
         $import = new ClientsImport();
-        Excel::import(new ClientsImport(), $this->path, 'local');
+        $import->import($this->path, 'local');
 
+        $errors = [];
         foreach ($import->failures() as $failure) {
-            dd($failure);
-            $failure->row(); // row that went wrong
-            $failure->attribute(); // either heading key (if using heading row concern) or column index
-            $failure->errors(); // Actual error messages from Laravel validator
-            $failure->values(); // The values of the row that has failed.
-       }
+            $errors[] = [
+                "row" => $failure->row(),
+                "field" => $failure->attribute(),
+                "errors" => $failure->errors(),
+                "values" => $failure->values(),
+            ];
+        }
+        return $errors;
     }
 }

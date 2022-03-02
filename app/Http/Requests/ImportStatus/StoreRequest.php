@@ -26,6 +26,7 @@ class StoreRequest extends FormRequest
         return [
             'status' => 'required|string|max:255',
             'data' => 'required|string|max:255',
+            'errors_array' => 'json',
             'user_id' => "exists:users,id"
         ];
     }

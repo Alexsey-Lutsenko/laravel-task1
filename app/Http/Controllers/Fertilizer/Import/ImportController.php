@@ -13,7 +13,11 @@ class ImportController extends Controller
         $file = $request->file('files');
         $filePath = $file->storeAs('imports', 'fertilizers.' . $file->getClientOriginalExtension());
 
-        UploadFertilizersJob::dispatchSync($filePath);
+        $errors = UploadFertilizersJob::dispatchSync($filePath);
+
+        if ($errors) {
+            return response(["messages" => "Данные импортированы с ошибками", "errorsImport" => json_encode($errors)], 206);
+        }
 
         return response(["messages" => "Данные импортированы"], 200);
     }
