@@ -1,5 +1,4 @@
 import axios from "axios";
-import { root } from "postcss";
 import errorHandler from "../../utils/services/errorHandler";
 import store from "../index";
 
@@ -124,6 +123,22 @@ export default {
             try {
                 await axios.patch(`api/clients/${payload.id}`, payload);
                 commit("updateClients", payload);
+                commit("remuveError");
+            } catch (e) {
+                commit("addErrors", errorHandler(e));
+            }
+        },
+
+        async download({ commit }) {
+            try {
+                await axios.get("api/clients/export", { responseType: "blob" }).then((response) => {
+                    const url = window.URL.createObjectURL(new Blob([response.data]));
+                    const link = document.createElement("a");
+                    link.href = url;
+                    link.setAttribute("download", "clients.xlsx");
+                    document.body.appendChild(link);
+                    link.click();
+                });
                 commit("remuveError");
             } catch (e) {
                 commit("addErrors", errorHandler(e));

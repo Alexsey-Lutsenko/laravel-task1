@@ -58,6 +58,10 @@ Route::group(['namespace'=>'Client', 'prefix'=>'clients'], function() {
     Route::group(['namespace'=>'Import', 'prefix'=>'import'], function() {
         Route::post('/','ImportController');
     });
+
+    Route::group(['namespace'=>'Export', 'prefix'=>'export'], function() {
+        Route::get('/','ExportController');
+    });
 });
 
 Route::group(['namespace'=>'Fertilizer', 'prefix'=>'fertilizers'], function() {
@@ -72,6 +76,10 @@ Route::group(['namespace'=>'Fertilizer', 'prefix'=>'fertilizers'], function() {
 
     Route::group(['namespace'=>'Import', 'prefix'=>'import'], function() {
         Route::post('/','ImportController');
+    });
+
+    Route::group(['namespace'=>'Export', 'prefix'=>'export'], function() {
+        Route::get('/','ExportController');
     });
 });
 

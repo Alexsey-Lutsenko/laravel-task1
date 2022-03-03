@@ -9,7 +9,8 @@
             </div>
         </div>
         <div class="d-flex">
-            <div>
+            <app-button-success @click="download"><i class="fa-solid fa-file-export"></i></app-button-success>
+            <div class="ml-2">
                 <button class="btn btn-primary" @click="showModalFilter = true">
                     <i class="fa-solid fa-filter"></i>
                 </button>
@@ -207,6 +208,7 @@ export default {
             closeFilter: () => {
                 showModalFilter.value = false;
             },
+            download: () => store.dispatch("fertilizer/download"),
         };
     },
     components: { FertilizerFilter, FertilizerImport },
