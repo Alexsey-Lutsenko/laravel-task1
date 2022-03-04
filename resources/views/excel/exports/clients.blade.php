@@ -11,7 +11,7 @@
     @foreach($clients as $client)
         <tr>
             <td>{{ $client->client }}</td>
-            <td>{{ date('d.m.Y', strtotime($client->created_at)) }}</td>
+            <td>{{ date('d.m.Y', strtotime($client->agreementDate)) }}</td>
             <td>{{ $client->purchase }}</td>
             <td>{{ $client->region }}</td>
         </tr>
