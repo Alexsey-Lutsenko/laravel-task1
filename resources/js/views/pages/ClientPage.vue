@@ -30,6 +30,7 @@
     <app-table class="w-50" v-if="!loader">
         <template v-slot:thead>
             <tr>
+                <th></th>
                 <th>Наименование</th>
                 <th>Дата договора</th>
                 <th>Стоимость поставки</th>
@@ -38,6 +39,9 @@
         </template>
         <template v-slot:tbody>
             <tr v-for="client of clients" :key="client.id" class="text-center">
+                <td>
+                    <i class="fa-regular fa-handshake agreement-icon" @click="getAgreement(client)"></i>
+                </td>
                 <td>{{ client.client }}</td>
                 <td>{{ formatDate(client.agreementDate) }}</td>
                 <td>{{ formatMoney.format(client.purchase) }}</td>
@@ -46,7 +50,7 @@
                     <i class="fa-solid fa-pencil text-primary fs-5" @click="update(client)"></i>
                 </td>
                 <td>
-                    <i class="fa-regular fa-trash-can text-danger fs-5 pointer-event" @click="remuve(client.id)"></i>
+                    <i class="fa-regular fa-trash-can text-danger fs-5" @click="remuve(client.id)"></i>
                 </td>
             </tr>
         </template>
@@ -159,6 +163,10 @@ export default {
             closeFilter: () => {
                 showModalFilter.value = false;
             },
+            getAgreement: async (client) => {
+                client.agreementDate = new Date(client.agreementDate);
+                await store.dispatch("client/getAgreement", client);
+            },
             update: (client) => {
                 client.agreementDate = new Date(client.agreementDate);
                 showModal.value = true;
@@ -185,5 +193,9 @@ td i:hover {
 }
 .ml-2 {
     margin-left: 5px;
+}
+.agreement-icon {
+    font-size: 20px;
+    color: #40b357;
 }
 </style>

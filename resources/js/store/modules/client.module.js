@@ -56,6 +56,9 @@ export default {
             if (requests.message) {
                 console.error("ERROR: ", requests.message);
             }
+            if (requests) {
+                console.error("ERROR: ", requests);
+            }
         },
 
         remuveError(state) {
@@ -136,6 +139,22 @@ export default {
                     const link = document.createElement("a");
                     link.href = url;
                     link.setAttribute("download", "clients.xlsx");
+                    document.body.appendChild(link);
+                    link.click();
+                });
+                commit("remuveError");
+            } catch (e) {
+                commit("addErrors", errorHandler(e));
+            }
+        },
+
+        async getAgreement({ commit }, payload) {
+            try {
+                await axios.post("api/clients/agreement", payload, { responseType: "blob" }).then((response) => {
+                    const url = window.URL.createObjectURL(new Blob([response.data]));
+                    const link = document.createElement("a");
+                    link.href = url;
+                    link.setAttribute("download", payload.client + ".docx");
                     document.body.appendChild(link);
                     link.click();
                 });

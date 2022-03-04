@@ -62,6 +62,10 @@ Route::group(['namespace'=>'Client', 'prefix'=>'clients'], function() {
     Route::group(['namespace'=>'Export', 'prefix'=>'export'], function() {
         Route::get('/','ExportController');
     });
+
+    Route::group(['namespace'=>'Agreement', 'prefix'=>'agreement'], function() {
+        Route::post('/','AgreementController');
+    });
 });
 
 Route::group(['namespace'=>'Fertilizer', 'prefix'=>'fertilizers'], function() {
